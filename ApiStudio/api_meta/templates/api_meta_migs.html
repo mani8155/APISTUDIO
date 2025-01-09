@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% block custom_menus %}
+  {% include "user_menus.html" %}
+{% endblock custom_menus %}
+{% block content %}
+{% load base_temp_tags %}
+<h4 class="fw-bold py-3 mb-2">API Meta Revision List</h4>
+{% if api_meta %}
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col">
+                <p>API Name: <strong>{{api_meta.api_name}}</strong></p>
+                <p>UID: <strong>{{api_meta.uid}}</strong></p>
+            </div>
+            <div class="col">
+                <p>API Method: <span class="badge rounded-pill bg-label-{{api_meta.api_method|badge}}"><strong>{{api_meta.api_method}}</strong></span></p>
+                <p>Python Code: <strong>{{api_meta.python_code|trim_file_name}}</strong></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+<div class="card mt-4">
+    <div class="table-responsive text-nowrap mt-2">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>UID</th> 
+                    <th>Created On</th> 
+                    <th>Python Code</th> 
+                    <th></th> 
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+                {% for mig in data %}
+                    <tr>
+                        <td>{{mig.uid}}</td>
+                        <td>{{mig.created_date}}</td>
+                        <td>{{mig.python_code|trim_file_name}}</td>
+                        <td>
+{#                            <button class="btn btn-sm btn-icon btn-primary" data-bs-toggle="modal" data-bs-target="#apiCopy{{mig.id}}">#}
+{#                                <span class="tf-icons bx bx-copy"></span>#}
+{#                            </button>#}
+                             <a class="btn btn-sm btn-icon btn-primary" href="{% url 'copy_custom_api_uids' mig.id %}">
+                                <span class="tf-icons bx bx-copy"></span>
+                            </a>
+                            <button class="btn btn-sm btn-icon btn-primary" data-bs-toggle="modal" data-bs-target="#apiRevert{{mig.id}}">
+                                <span class="tf-icons bx bxs-arrow-from-right"></span>
+                            </button>
+                        </td>
+                    </tr>
+                    <div class="modal fade" id="apiCopy{{mig.id}}" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel1">Copy</h5>
+                              <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                              ></button>
+                            </div>
+                            <form method="POST">
+                               <div class="modal-body">
+                                {% csrf_token %}
+                                <input type="hidden" name="mig_id" value="{{mig.id}}">
+                                <div class="mb-3">
+                                    <label class="form-label">UID</label>
+                                    <input type="text" name="uid" class="form-control" required="" id="id_uid">
+                                </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                        Close
+                                    </button>
+                                    <button type="submit" name="form_request" value="api_copy" class="btn btn-primary">
+                                        Send
+                                    </button>
+                                </div>
+                            </form>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="apiRevert{{mig.id}}" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel1">Revert</h5>
+                              <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                              ></button>
+                            </div>
+                            <form method="POST">
+                               <div class="modal-body">
+                                {% csrf_token %}
+                                <input type="hidden" name="mig_id" value="{{mig.id}}">
+                                <input type="hidden" name="uid" value="{{mig.uid}}">
+                                <p>Are you sure you want to revert api: <b>{{mig.uid}}</b>?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                        Close
+                                    </button>
+                                    <button type="submit" name="form_request" value="api_revert" class="btn btn-primary">
+                                        Send
+                                    </button>
+                                </div>
+                            </form>
+                          </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}

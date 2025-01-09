@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block custom_menus %}
+    {% include "admin_menus.html" %}
+{% endblock custom_menus %}
+
+{% block content %}
+    <h4 class="fw-bold py-3 mb-4">Select Application Groups</h4>
+
+    <div class="card mt-4">
+        <div class="table-responsive text-nowrap mt-2">
+            <table class="table" id="example">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Group ID</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody class="table-border-bottom-0">
+                {% for group in app_groups %}
+                    <tr>
+                        <td>{{ group.name }}</td>
+                        <td>{{ group.group_id }}</td>
+                        <td>
+                            <a class="btn btn-primary btn-sm" href="{% url 'create_application_group' group.psk_id %}">
+                                Select
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock content %}

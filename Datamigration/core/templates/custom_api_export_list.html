@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% load base_temp_tags %}
+    <h4 class="fw-bold py-3 mb-4">Custom Api Export List</h4>
+    <form method="post">
+        <button type="submit" class="btn btn-primary">Export</button>
+        <div class="card mt-4">
+            <div class="table-responsive text-nowrap mt-2">
+                {% csrf_token %}
+                <table class="table py-3" id="example">
+                    <thead>
+                    <tr>
+                        <th>
+                            <input type="checkbox" class="form-check-input" id="action-toggle"
+                                   aria-label="Select all objects on this page for an action">
+                        </th>
+                        <th>Api Name</th>
+                        <th>Api Method</th>
+                        <th>UID</th>
+                        <th>Python Code</th>
+                    </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                    {% for api in apis %}
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="_selected_action" value="{{ api.id }}"
+                                       class="form-check-input"
+                                       aria-label="Select this object for an action - {{ api.api_name }}">
+                            </td>
+                            <td>{{ api.api_name }}</td>
+                            <td><span class="badge rounded-pill bg-label-{{ api.api_method|badge }}">{{ api.api_method }}</span>
+                            </td>
+                            <td>{{ api.uid }}</td>
+                            <td><b>{{ api.code_name|trim_file_name }}</b></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </form>
+{% endblock content %}
+
+{% block custom_scripts %}
+    <script>
+        $(document).ready(function () {
+            $('#action-toggle').change(function () {
+                if (this.checked) {
+                    $('input[name="_selected_action"]').prop('checked', true);
+                } else {
+                    $('input[name="_selected_action"]').prop('checked', false);
+                }
+            });
+        });
+    </script>
+{% endblock custom_scripts %}

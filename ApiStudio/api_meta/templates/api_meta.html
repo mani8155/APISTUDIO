@@ -1,0 +1,193 @@
+{% extends "base.html" %}
+{% block custom_menus %}
+    {% include "user_menus.html" %}
+{% endblock custom_menus %}
+{% block content %}
+    {% load base_temp_tags %}
+    <h4 class="fw-bold py-3 mb-4">API Meta List</h4>
+
+    <div class="row mt-4">
+        <div class="col-auto">
+             {% if 'create' in permission or user.is_superuser or user.first_name == 'admin' %}
+            <a href="{% url "get_custom_api_uids" %}" class="btn btn-primary">
+                <span class="tf-icons bx bx-list-plus"></span>&nbsp; Add New
+            </a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="card mt-4">
+        <div class="table-responsive text-nowrap mt-2">
+            <table class="table py-3" id="example">
+                <thead>
+                <tr>
+                     <th></th>
+                    <th>API Name</th>
+                    <th>API Type</th>
+                    <th>API Method</th>
+                    <th>UID</th>
+                    <th>DB Connection</th>
+                    <th>Python Code</th>
+
+                </tr>
+                </thead>
+                <tbody class="table-border-bottom-0">
+                {% for api in api_meta %}
+                    {% if api.api_source == "custom" %}
+                        <tr>
+                            <td>
+                                {% if 'settings' in permission or user.is_superuser or user.first_name == 'admin' %}
+
+                                    <div class="btn-group">
+                                        <button class="btn btn-dark btn-sm dropdown-toggle dropdown-toggle-split"
+                                                data-bs-toggle="dropdown" aria-expanded="true"
+                                        >
+                                            <i class='bx bx-cog'></i>
+                                        </button>
+
+                                    {% if user.is_superuser or user.first_name == 'admin' %}
+
+                                        <ul class="dropdown-menu">
+
+                                            <li>
+                                                <a class="dropdown-item"
+                                                   href="{% url "update_api_meta" api.id %}">
+                                                    Edit
+                                                </a>
+                                            </li>
+
+
+                                            <li>
+                                                <a class="dropdown-item"
+                                                   href="{% url "get_api_file" api.id %}">
+                                                    View Code
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a class="dropdown-item"
+                                                   href="{% url "api_meta_migs_list" api.id %}">
+                                                    Revision History
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a class="dropdown-item"
+                                                   href="{% url "clone_custom_api_uids" api.id %}">
+                                                    Clone
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a class="dropdown-item"
+                                                   href="{% url "api_meta_logs" api.id %}">
+                                                    Log History
+                                                </a>
+                                            </li>
+
+
+                                            {% if api.document_url %}
+                                                <li>
+                                                    <a class="dropdown-item"
+                                                       href="{{ api.document_url }}" target="_blank">
+                                                        Document
+                                                    </a>
+                                                </li>
+ {% endif %}
+                                                </ul>
+
+                                                {% endif %}
+
+
+                                        <ul class="dropdown-menu">
+
+                                            {% for dict_item in permission_action %}
+                                                {% for key, value in dict_item.items %}
+                                                    {% if key == api.id %}
+                                                        <!-- Show 'Join' option if 'join' permission exists -->
+                                                        {% if 'join' in value  %}
+
+                                                            <li>
+                                                                <a class="dropdown-item"
+                                                                   href="{% url 'custom_api_join_read_permission' api.uid %}">Join</a>
+                                                            </li>
+
+                                                        {% endif %}
+
+                                                        {% if 'edit' in value %}
+                                                            <li>
+                                                                <a class="dropdown-item"
+                                                                   href="{% url "update_api_meta" api.id %}">
+                                                                    Edit
+                                                                </a>
+                                                            </li>
+                                                        {% endif %}
+
+                                                        {% if 'view_code' in value %}
+
+                                                            <li>
+                                                                <a class="dropdown-item"
+                                                                   href="{% url "get_api_file" api.id %}">
+                                                                    View Code
+                                                                </a>
+                                                            </li>
+                                                        {% endif %}
+
+                                                        {% if 'revision' in value %}
+                                                            <li>
+                                                                <a class="dropdown-item"
+                                                                   href="{% url "api_meta_migs_list" api.id %}">
+                                                                    Revision History
+                                                                </a>
+                                                            </li>
+
+                                                                 <li>
+                                                                <a class="dropdown-item"
+                                                                   href="{% url "clone_custom_api_uids" api.id %}">
+                                                                    Clone
+                                                                </a>
+                                                            </li>
+
+                                                        {% endif %}
+                                                        {% if 'loghistory' in value %}
+                                                            <li>
+                                                                <a class="dropdown-item"
+                                                                   href="{% url "api_meta_logs" api.id %}">
+                                                                    Log History
+                                                                </a>
+                                                            </li>
+                                                        {% endif %}
+
+                                                        {% if api.document_url %}
+                                                            <li>
+                                                                <a class="dropdown-item"
+                                                                   href="{{ api.document_url }}" target="_blank">
+                                                                    Document
+                                                                </a>
+                                                            </li>
+
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+
+                                {% endif %}
+                            </td>
+                            <td>{{ api.api_name }}</td>
+                            <td>{{ api.api_type }}</td>
+                            <td><span
+                                    class="badge rounded-pill bg-label-{{ api.api_method|badge }}">{{ api.api_method }}</span>
+                            </td>
+                            <td>{{ api.uid }}</td>
+                            <td>{{ api.db_connection_name }}</td>
+                            <td><b>{{ api.code_name|trim_file_name }}</b></td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock content %}

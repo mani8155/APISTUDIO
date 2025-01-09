@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block custom_menus %}
+  {% include "user_menus.html" %}
+{% endblock custom_menus %}
+{%  block content %}
+
+
+
+<h4 class="fw-bold py-3 mb-4">{{ db_name }} / Schemas</h4>
+<a href="{% url 'add_schema' id %}" class="btn btn-primary">
+    <span class="tf-icons bx bx-list-plus"></span>&nbsp;  New Schema
+</a>
+
+<div class="card mt-4">
+    <div class="table-responsive text-nowrap mt-2">
+        <table class="table py-3" id="example">
+            <thead>
+                <tr>
+                    <th>Schema Name</th>
+                    <th>Table</th>
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+                {% for field in schema_list %}
+                    <tr>
+                        <td>{{field}}</td>
+                        <td><a href="{% url 'table_list' id field %}" class="btn btn-sm btn-primary"><span class="tf-icons bx bx-table"></span>&nbsp; List Table</a>
+
+                        </td>
+
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+{%  endblock content %}

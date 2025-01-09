@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block custom_menus %}
+    {% include "user_menus.html" %}
+{% endblock custom_menus %}
+{% block content %}
+    <h4 class="fw-bold py-3 mb-4">Field Property</h4>
+
+    <div class="mb-4">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal">
+            Add Choice
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="basicModal" tabindex="-1" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel1">Add Choice</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="modal-body">
+                            {% for field in form %}
+                                <div class="mb-3">
+                                    <label class="form-label">{{ field.label }}</label>
+                                    {{ field }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Send</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="table-responsive text-nowrap mt-2">
+            <table class="table py-3">
+                <thead>
+                <tr>
+                    <th>Choices</th>
+                </tr>
+                </thead>
+                <tbody class="table-border-bottom-0">
+                {% for choice in select_prop.choices %}
+                    <tr>
+                        <td>{{ choice }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock content %}

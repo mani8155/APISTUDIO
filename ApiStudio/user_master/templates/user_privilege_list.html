@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block custom_menus %}
+    {% include "admin_menus.html" %}
+{% endblock custom_menus %}
+
+{% block content %}
+    <h4 class="fw-bold py-3 mb-4">User Privilege</h4>
+    <div class="demo-inline-spacing">
+        <a href="{% url 'add_user_privilege' %}" class="btn btn-primary">
+            <span class="tf-icons bx bx-list-plus"></span>&nbsp; Add New Privilege
+        </a>
+    </div>
+    <div class="card mt-4">
+        <div class="table-responsive text-nowrap mt-2">
+            <table class="table" id="example">
+                <thead>
+                <tr>
+                    <th>User Privilege</th>
+                    <th>Privilege ID</th>
+                    <th>Menu Items</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody class="table-border-bottom-0">
+                {% for privy in privileges %}
+                    <tr>
+                    <td>{{ privy.user_privilege_name }}</td>
+                    <td>{{ privy.menu_privilege }}</td>
+                    <td>{{ privy.menu_items }}</td>
+                    <td>
+                        <a href="{% url 'edit_user_privilege' privy.psk_id %}"
+                           class="btn btn-primary btn-icon btn-sm">
+                            <i class="bx bxs-edit"></i>
+                        </a>
+                        <a href = "{% url 'delete_user_privilege' privy.psk_id %}"
+                               class="btn btn-primary btn-icon btn-sm">
+                                <i class="bx bx-trash"></i>
+                        </a>
+                    </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock content %}

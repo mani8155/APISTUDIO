@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load base_temp_tags %}
+{% block custom_menus %}
+    {% include "user_menus.html" %}
+{% endblock custom_menus %}
+
+{% block content %}
+    <h4 class="fw-bold py-3">Select Sql View</h4>
+    {% if not sql_views %}
+        <div class="alert alert-danger" role="alert">
+            No Sql View Found. Contact Administrator
+        </div>
+    {% endif %}
+    <div class="card mt-4">
+        <div class="table-responsive text-nowrap mt-2">
+            <table class="table" id="example">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>ID</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody class="table-border-bottom-0">
+                {% for app in sql_views %}
+                    <tr>
+                        <td>{{ app.api_name }}</td>
+                        <td>{{ app.uid }}</td>
+                        <td>
+                            <a class="btn btn-sm btn-primary" href="{% url 'new_auth' app.uid 'sql_views' %}">
+                                Select
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock content %}

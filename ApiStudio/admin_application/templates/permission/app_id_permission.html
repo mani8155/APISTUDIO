@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% load base_temp_tags %}
+{% block custom_menus %}
+    {% include "admin_menus.html" %}
+{% endblock custom_menus %}
+
+{% block content %}
+    
+    <h4 class="fw-bold py-1">
+     {{ group_name }} / {{ application_name }}<span class="text-muted fw-light"> /  {{ type }}( {{ type_id_value }} ) </span>
+</h4>
+    
+{#   {{ group_name }} | {{ application_name }} | {{ type }}#}
+
+    <div class="demo-inline-spacing py-3">
+        <a href="{% url 'select_user' group_id app_id %}" class="btn  btn-primary">
+            <span class="tf-icons bx bx-list-plus"></span>&nbsp; Add Member
+        </a>
+    
+     {% if type_id_value == 'asa0106' %}
+    <a href="{% url 'sql_views_permission' %}" class="btn btn-secondary"
+                   aria-expanded="false">
+                    <span class="tf-icons bx bxs-lock-open-alt"></span>&nbsp; SQl Views Permission
+                </a>
+    {% endif %}
+    
+    {% if type_id_value == 'asa0107' %}
+    <a href="{% url 'auth_permission' %}" class="btn btn-secondary"
+                   aria-expanded="false">
+                    <span class="tf-icons bx bxs-lock-open-alt"></span>&nbsp; Authentication Permission
+                </a>
+    {% endif %}
+    
+
+<div class="card">
+<h5 class="m-3">Owner</h5>
+    <div class="table-responsive text-nowrap mt-2">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th> 
+                    <th>Role</th>
+                     <th>Permission</th>
+                    <th></th>
+                   
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+              {% for own in owners_obj %}
+                    <tr>
+                        <td>{{own.user.username}}</td>
+                        <td><span class="badge rounded-pill bg-label-danger">{{own.role}}</span></td>
+                        <td></td>
+                        <td><a href="{% url 'edit_per_form' group_id app_id own.user.username own.id %}"
+                               class="btn btn-primary btn-icon btn-sm">
+                            <i class="bx bxs-edit"></i>
+                        </a>
+                        </td>
+                    </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+    <br>
+    
+
+<div class="card">
+<h5 class="m-3">Members and Guests</h5>
+    <div class="table-responsive text-nowrap mt-2">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th> 
+                    <th>Role</th>
+                     <th>Permission</th>
+                     <th></th>
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+              {% for mem in members_obj %}
+                    <tr>
+                        <td>{{mem.user.username}}</td>
+                        <td><span class="badge rounded-pill bg-label-success">{{mem.role}}</span></td>
+                        <td>{{ mem.group_name }}</td>
+                        <td><a href="{% url 'edit_per_form' group_id app_id mem.user.username mem.id %}"
+                               class="btn btn-primary btn-icon btn-sm">
+                            <i class="bx bxs-edit"></i>
+                        </a>
+                        </td>
+                    </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}

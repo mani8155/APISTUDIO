@@ -1,0 +1,105 @@
+{% load base_temp_tags %}
+<ul class="menu-inner py-1">
+{#    <li class="menu-item" id="menu-db" value="asa0101">#}
+{#        <a href="{% url 'db' %}" class="menu-link">#}
+{#            <i class='menu-icon tf-icons bx bx-data'></i>#}
+{#            <div data-i18n="Connections">Connections</div>#}
+{#        </a>#}
+{#    </li>#}
+{#    <li class="menu-item" id="menu-schema" value="asa0102">#}
+{#        <a href="{% url 'schemas' %}" class="menu-link">#}
+{#            <i class="menu-icon tf-icons bx bx-windows"></i>#}
+{#            <div data-i18n="Schemas">Schemas</div>#}
+{#        </a>#}
+{#    </li>#}
+{#    <li class="menu-item" id="menu-models" value="asa0103">#}
+{#        <a href="{% url "home" %}" class="menu-link">#}
+{#            <i class="menu-icon tf-icons bx bxs-layout"></i>#}
+{#            <div data-i18n="Models">Models</div>#}
+{#        </a>#}
+{#    </li>#}
+{#    <li class="menu-item" id="menu-tables" value="asa0104">#}
+{#        <a href="#" class="menu-link">#}
+{#            <i class="menu-icon tf-icons bx bx-table"></i>#}
+{#            <div data-i18n="Data Tables">Data Tables</div>#}
+{#        </a>#}
+{#    </li>#}
+{#    <li class="menu-item" id="menu-dash" value="asa0105">#}
+{#        <a href="#" class="menu-link">#}
+{#            <i class="menu-icon tf-icons bx bxs-dashboard"></i>#}
+{#            <div data-i18n="Dashboard">Dashboard</div>#}
+{#        </a>#}
+{#    </li>#}
+{#    <li class="menu-item" id="menu-views" value="asa0106">#}
+{#        <a href="{% url 'views_page' %}" class="menu-link">#}
+{#            <i class="menu-icon tf-icons bx bx-file"></i>#}
+{#            <div data-i18n="Views">SQL Views</div>#}
+{#        </a>#}
+{#    </li>#}
+{#    <li class="menu-item" id="menu-api-auth" value="asa0107">#}
+{#        <a href="{% url 'auth_list' %}" class="menu-link">#}
+{#            <i class="menu-icon tf-icons bx bxs-lock"></i>#}
+{#            <div data-i18n="Authentication">Authentication</div>#}
+{#        </a>#}
+{#    </li>#}
+{#    <li class="menu-item" id="menu-api-meta" value="asa0108">#}
+{#        <a href="{% url "api_meta_list" %}" class="menu-link">#}
+{#            <i class="menu-icon tf-icons bx bx-code-block"></i>#}
+{#            <div data-i18n="Custom API">Custom API</div>#}
+{#        </a>#}
+{#    </li>#}
+{#    <li class="menu-item" id="menu-core-api" value="asa0109">#}
+{#        <a href="{% url "api_core_list" %}" class="menu-link">#}
+{#            <i class="menu-icon tf-icons bx bx-code-alt"></i>#}
+{#            <div data-i18n="Core API">Core API</div>#}
+{#        </a>#}
+{#    </li>#}
+{#    <li class="menu-item" id="menu-flow" value="asa0110">#}
+{#        <a href="#" class="menu-link">#}
+{#            <i class='menu-icon tf-icons bx bxs-vial'></i>#}
+{#            <div data-i18n="Flow">Flow</div>#}
+{#        </a>#}
+{#    </li>#}
+{#    <li class="menu-item" id="menu-cms" value="asa0111">#}
+{#        <a href="{% url 'cms_page' %}" class="menu-link">#}
+{#            <i class='menu-icon bx bxs-book-content'></i>#}
+{#            <div data-i18n="CMS Page">CMS Page</div>#}
+{#        </a>#}
+{#    </li>#}
+{#    <li class="menu-item" value="asa0112">#}
+{#        <a href="/etlstudio" class="menu-link">#}
+{#            <i class='menu-icon bx bxs-timer'></i>#}
+{#            <div data-i18n="Scheduled Jobs">Scheduled Jobs</div>#}
+{#        </a>#}
+{#    </li>#}
+
+
+
+    {% for menu in studio_menus %}
+        <li class="menu-item" id="{{ menu.menu_ui_code }}">
+                  {% if menu.menu_href == "/etlstudio" %}
+
+                  <a href="{% url 'api_jobs_list' %}" class="menu-link">
+                    <i class='menu-icon bx {{ menu.icon_class }}'></i>
+                    <div>{{ menu.menu_name }}</div>
+                </a>
+         {% elif menu.menu_href %}
+                      <a href="{% url menu.menu_href %}" class="menu-link">
+                    <i class='menu-icon bx {{ menu.icon_class }}'></i>
+                    <div>{{ menu.menu_name }}</div>
+                </a>
+            {% else %}
+                <a href="#" class="menu-link">
+                    <i class='menu-icon bx {{ menu.icon_class }}'></i>
+                    <div>{{ menu.menu_name }}</div>
+                </a>
+            {% endif %}
+        </li>
+    {% endfor %}
+
+</ul>
+
+
+
+
+

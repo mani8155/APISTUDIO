@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block custom_menus %}
+  {% include "user_menus.html" %}
+{% endblock custom_menus %}
+{% load base_temp_tags %}
+{% block content %}
+{% load schema_temp_tags %}
+
+
+
+<h4 class="fw-bold mb-3 mt-2">SQl Views / {{api_name}} </h4>
+
+
+
+<div class="card mt-4">
+    <div class="table-responsive text-nowrap mt-3">
+        <table class="table py-3" id="example" >
+            <thead>
+                {% for col in columns %}
+                    <th>{{col}}</th>
+                    {% endfor %}
+            </thead>
+            <tbody class="table-border-bottom-0">
+                {% for res_data in sql_response_data %}
+                <tr>
+                    {% for col in columns %}
+                          <td>{{ res_data|getattribute:col }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+
+{% endblock content %}

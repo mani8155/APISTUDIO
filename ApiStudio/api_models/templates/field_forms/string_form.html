@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block custom_menus %}
+    {% include "user_menus.html" %}
+{% endblock custom_menus %}
+{% block content %}
+    <h4 class="fw-bold py-3 mb-4">Field Property</h4>
+    <div class="card mb-4">
+        <div class="card-body">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="row">
+                    {% for field in form %}
+                        <div class="col-6 mb-3">
+                            <label class="form-label">{{ field.label }}</label>
+                            {{ field }}
+                        </div>
+                    {% endfor %}
+                </div>
+                <button type="submit" class="btn btn-primary">Send</button>
+            </form>
+        </div>
+    </div>
+
+
+
+    <script>
+        // Get the unique and nullable checkbox elements
+        const uniqueField = document.getElementById('id_unique');
+        const nullableField = document.getElementById('id_nullable');
+
+        // Function to handle the checkbox logic
+        function handleCheckboxes() {
+            if (uniqueField.checked) {
+                nullableField.checked = false;  // Uncheck nullable
+                nullableField.disabled = true;  // Disable nullable
+            } else {
+                nullableField.disabled = false;  // Re-enable nullable when unique is unchecked
+            }
+        }
+
+        uniqueField.addEventListener('change', handleCheckboxes);
+
+        // Initial check in case the form is prefilled
+        handleCheckboxes();
+    </script>
+{% endblock content %}
+
+

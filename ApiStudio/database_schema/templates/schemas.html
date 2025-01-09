@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block custom_menus %}
+  {% include "user_menus.html" %}
+{% endblock custom_menus %}
+
+{% block content %}
+<h4 class="fw-bold py-3 mb-4">Select Your DB</h4>
+
+
+
+<div class="card mt-4">
+    <div class="table-responsive text-nowrap mt-2">
+        <table class="table py-3" id="example">
+            <thead>
+            <tr>
+                <th>DB Connection</th>
+                <th>DB Engine</th>
+                <th>DB Name</th>
+                <th>Action</th>
+                {% comment %} <th></th> {% endcomment %}
+            </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+                {% for field in schema_list %}
+                    <tr>
+                        <td>{{field.db_connection}}</td>
+                        <td>{{field.db_engine}}</td>
+                        <td>{{field.db_name}}</td>
+
+                        {% if field.db_engine == 'postgresql' %}
+
+                        <td>
+                            {% if 'view' in permission or user.is_superuser or user.first_name == 'admin' %}
+                                <a href="{% url 'schemas_list' field.id %}" class="btn btn-sm btn-primary">
+                                    <span class="tf-icons bx bx-windows"></span> View Schemas</a>
+                            {% endif %}
+                            {% if 'edit' in permission or user.is_superuser or user.first_name == 'admin' %}
+                                <a href="{% url 'permision_schema' field.id field.db_connection %}"
+                                   class="btn btn-sm btn-secondary">
+                                    <span class="tf-icons bx bx-cog"></span> Permision</a>
+                            {% endif %}
+                        </td>
+
+                        {% elif field.db_engine == 'mssql' %}
+                            <td>
+                                {% if 'view' in permission or user.is_superuser or user.first_name == 'admin' %}
+                                    <a href="{% url 'mssql_tables_list' field.id %}" class="btn btn-sm btn-primary">
+                                        <span class="tf-icons bx bx-windows"></span> View Tables</a>  {% endif %}
+                            </td>
+
+                        {% else %}
+
+                            <td>
+                                {% if 'view' in permission or user.is_superuser or user.first_name == 'admin' %}
+                                    <a href="{% url 'sql_tables' field.id %}" class="btn btn-sm btn-primary">
+                                        <span class="tf-icons bx bx-windows"></span> View Tables</a>
+                                {% endif %}
+                            </td>
+
+                        {% endif %}
+
+
+
+                        {% comment %} <td>
+                            <a class="btn btn-sm btn-dark">
+
+                                <i class='bx bx-cog'></i>
+                            </a>
+
+                        </td> {% endcomment %}
+
+                    </tr>
+
+
+             {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+
+
+
+{% endblock content %}

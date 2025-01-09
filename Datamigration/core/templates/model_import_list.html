@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h4 class="fw-bold py-3 mb-4">Modal Import List</h4>
+
+    <div class="card mt-4">
+        <h5 class="card-header">Tables</h5>
+        <div class="card-body">
+            <ul>
+                {% for table in tables %}
+                    <li>{{ table.table_name }}</li>
+                {% endfor %}
+            </ul>
+
+            {% if imp_errors %}
+                <h5>Import Errors</h5>
+                <ul>
+                    {% for error in imp_errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock content %}

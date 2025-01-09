@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block custom_menus %}
+  {% include "user_menus.html" %}
+{% endblock custom_menus %}
+
+{% block content %}
+<h4 class="fw-bold py-3 mb-4">Select Your DB</h4>
+
+
+
+<div class="card mt-4">
+    <div class="table-responsive text-nowrap mt-2">
+        <table class="table">
+            <thead>
+                <tr>   <th>DB Connection</th>
+                    <th>DB Engine</th>
+                    <th>DB Name</th>
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+                {% for field in schema_list %}
+                    <tr>
+                        <td>{{field.db_connection}}</td>
+                        <td>{{field.db_engine}}</td>
+                        <td>{{field.db_name}}</td>
+
+                        {% if field.db_engine == 'postgresql' %}
+
+                        <td><a href="{% url 'schemas_list' field.id %}" class="btn btn-sm btn-primary">
+                             <span class="tf-icons bx bx-windows"></span>      View Schemas</a></td>
+
+                        {% else %}
+
+                        <td><a href="{% url 'sql_tables' field.id %}" class="btn btn-sm btn-primary">
+                             <span class="tf-icons bx bx-windows"></span>      View Tables</a></td>
+
+                        {% endif %}
+
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+{% endblock content %}

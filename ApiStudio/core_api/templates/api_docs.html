@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+
+{% block custom_menus %}
+{% include "user_menus.html" %}
+{% endblock custom_menus %}
+{% load base_temp_tags %}
+{% block content %}
+
+
+<h5 class="fw-bold py-3 mb-2">{{obj.db_connection_name}} / {{obj.api_name}}</h5>
+
+
+<div class="row">
+    <div class="col">
+        <h6 class="fw-bold py-2 mb-1">API</h6>
+    </div>
+    
+    <div class="col">
+        <h6 class="fw-bold py-2 mb-1">Method : <span class="badge rounded-pill bg-success">{{obj.api_method}}</span></h6>
+        
+    </div>
+
+</div>
+
+
+
+<div class="card mb-4">
+    <div class="row">
+        <div class="col">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item" id="apiValue">{{api_url}}</li>
+            </ul>
+        </div>
+        <div class="col-auto">
+            <button id="selectAPI"  class="btn btn-sm btn-primary btn-icon" onclick="copyAPI();"><i class='bx bx-copy'></i></button>
+            <button id="unselectAPI" class="btn btn-sm btn-secondary btn-icon" onclick="unSelectAPIButton();" style="display:none;"><i class='bx bxs-copy-alt'></i></button>
+        </div>
+
+    </div>
+</div>
+<hr>
+
+<h6 class="fw-bold py-2 mb-1">body params <span class="badge rounded-pill bg-warning">{ }</span></h6>
+
+<div class="card">
+    <div class="d-flex align-items-end row">
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                </div>
+                <div class="col-auto">
+                    <button id="select" class="btn btn-sm btn-primary btn-icon" onclick="copyContent();"><i class='bx bx-copy'></i></button>
+                    <button id="unselect" class="btn btn-sm btn-secondary btn-icon" onclick="unSelectContent();" style="display:none;"><i class='bx bxs-copy-alt'></i></button>
+                </div>
+
+            </div>
+            {% if body_response %}
+            <h5><pre id="body_response">{{ body_response | safe }}</pre></h5>
+            {% else %}
+            <p style="color: red;">" The body parameter values are not defined "</p>
+
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+{% endblock content %}
+
+{% block custom_scripts %}
+<script>
+    function copyContent() {
+        var content = document.getElementById('body_response').innerText;
+        navigator.clipboard.writeText(content)
+            .then(function() {
+                document.getElementById("body_response").style.backgroundColor = "#eaecee  ";
+                $('#unselect').show();
+                $('#select').hide();
+            })
+            .catch(function(error) {
+                console.error('Unable to copy content: ', error);
+            
+            });
+    }
+
+    function unSelectContent(){
+      
+        document.getElementById("body_response").style.backgroundColor = "white";
+        $('#select').show();
+        $('#unselect').hide();
+    }
+
+    
+
+    function copyAPI(){
+        var api_data = document.getElementById('apiValue').innerText;
+        navigator.clipboard.writeText(api_data)
+            .then(function() {
+                document.getElementById("apiValue").style.backgroundColor = "#eaecee";
+                $('#unselectAPI').show();
+                $('#selectAPI').hide();
+            })
+            .catch(function(error) {
+                console.error('Unable to copy content: ', error);
+            
+            });
+    }
+
+
+    function unSelectAPIButton(){
+      
+        document.getElementById("apiValue").style.backgroundColor = "white";
+        $('#selectAPI').show();
+        $('#unselectAPI').hide();
+    }
+
+
+</script>
+{% endblock custom_scripts %}
+
+

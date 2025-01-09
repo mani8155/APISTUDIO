@@ -1,0 +1,46 @@
+
+{% extends "base.html" %}
+{% block custom_menus %}
+  {% include "user_menus.html" %}
+{% endblock custom_menus %}
+{% load base_temp_tags %}
+{% block content %}
+
+
+
+<h4 class="fw-bold">{{api_name}} / add params value</h4>
+
+<div class="card mb-4 mt-2">
+    <div class="card-body">
+        <div class="row">
+            <div class="col"> <h5>Parameter</h5></div>
+            <div class="col"> <h5>Value</h5></div>
+
+        </div>
+       
+       
+        <form Method="post" action={% url 'api_parametar_type' %}>
+            {% csrf_token %}
+        {% for field_name in api_params_list %}
+        <div class="row g-2">
+            <div class="col mb-0 mt-3">
+            <input type="text" name="field_id_{{ forloop.counter }}" class="form-control" value="{{field_name}}" readonly>
+            </div>
+            <div class="col mb-0 mt-3">
+               
+
+                <input type="text" name="param_type_{{ forloop.counter }}" class="form-control" required>
+            
+            </div>
+            
+        </div>
+        {% endfor %}
+
+        <input type="hidden" name="params_count" value="{{api_params_count}}">
+        <input type="hidden" name="id" value="{{id}}">
+       
+        <button class="form-control mt-3 btn-primary" style="width: 8%;" type="submit">Save</button>
+        </form>
+    </div>
+
+{% endblock content %}

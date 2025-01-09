@@ -1,0 +1,54 @@
+{% extends "base.html" %} 
+{% block custom_menus %}
+  {% include "user_menus.html" %}
+{% endblock custom_menus %}
+{% block content %}
+
+
+<h4 class="fw-bold py-3 mb-4">DataBase Connection</h4>
+
+{% if 'create' in permission or user.is_superuser or user.first_name == 'admin' %}
+
+<a href="{% url "create_db_form" %}" class="btn btn-primary">
+    <span class="tf-icons bx bx-list-plus"></span>&nbsp; Add New
+</a>
+{% endif %}
+
+<div class="card mt-4">
+    <div class="table-responsive text-nowrap mt-2">
+        <table class="table py-3" id="example">
+            <thead>
+                <tr>
+                    <th>DB Engine</th>
+                    <th>DB User</th>
+                    
+                    <th>DB Host</th>
+                    <th>DB Port</th>
+                    <th>DB Name</th>
+                    <th>DB Connection</th>
+                    <th>Edit</th>
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+                {% for field in db_list %}
+                    <tr>
+                        <td>{{field.db_engine}}</td>
+                        <td>{{field.db_user}}</td>
+                        
+                        <td>{{field.db_host | title}}</td>
+                        <td>{{field.db_port}}</td>
+                        <td>{{field.db_name}}</td>
+                        <td>{{field.db_connection}}</td>
+                        <td>
+                           {% if 'edit' in permission or user.is_superuser or user.first_name == 'admin' %}
+                            <a href="{% url 'edit_db_form' field.id %}" class="btn btn-sm btn-primary" ><i class='bx bxs-edit'></i></a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block custom_menus %}
+  {% include "user_menus.html" %}
+{% endblock custom_menus %}
+{% load base_temp_tags %}
+{% block content %}
+
+
+
+
+
+<h4 class="fw-bold py-3">SQL Views/ {{api_name}} / log</h4>
+
+<div class="card mt-4">
+    <div class="table-responsive text-nowrap mt-3">
+        <table class="table py-3" id="example" >
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Action</th>
+                    <th>Log</th>
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+                {% for log in log_data %}
+                    <tr>
+                        <td>{{log.created_date}}</td>
+                      
+                        {% if log.api_action == "Created" %}
+                        <td><span class="badge rounded-pill bg-label-success">Created</td>
+                        {%elif log.api_action == "Updated" %}
+                        <td><span class="badge rounded-pill bg-label-danger">Updated</td>
+                        {%elif log.api_action == "View" %}
+                        <td><span class="badge rounded-pill bg-label-primary">View</td>
+                        {%elif log.api_action == "Run" %}
+                        <td><span class="badge rounded-pill bg-label-info">Run</td>
+                        {%else%}
+                        <td><span class="badge rounded-pill bg-label-warning">None</td>
+                        {%endif%}
+                        <td>{{log.log}}</td>
+            
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+{% endblock content %}

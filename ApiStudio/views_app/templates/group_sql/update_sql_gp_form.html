@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block custom_menus %}
+  {% include "user_menus.html" %}
+{% endblock custom_menus %}
+
+{% block content %}
+
+
+
+      
+
+  <h5>{{connection}} / {{schema}} / Update</h5>
+  <div class="card mb-4">
+   
+    <div class="card-body">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %} 
+
+            <div class="table-responsive text-nowrap mt-3">
+              <table class="table py-3" id="example" >
+                  <thead>
+                      <tr>
+                          <th>Select Sql</th>
+                          <th>UID</th>
+                          <th>API Name</th>
+                      </tr>
+                  </thead>
+                  <tbody class="table-border-bottom-0">
+                      {% for obj in group_sql_list %}
+                          <tr>
+                            {% if obj.api_name in pre_data %}
+                           <td> <input class="form-check-input" type="checkbox" name="selected_sql_api_name[]" value="{{obj.api_name}}" id="defaultCheck{{obj.id}}" checked=""></td>
+                            {% else %}
+                           <td> <input class="form-check-input" type="checkbox" name="selected_sql_api_name[]" value="{{obj.api_name}}" id="defaultCheck{{obj.id}}"></td>
+                           {% endif %} 
+
+                           <td>{{obj.uid}}</td>
+                            <td>{{obj.api_name}}</td>
+        
+                          </tr>
+                           
+                            
+                      {% endfor %}
+                  </tbody>
+              </table>
+          </div>
+         
+    <div class=" mt-3">
+      <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+        </form>
+    </div>
+</div>
+
+ 
+       
+      
+
+
+
+  
+
+{% endblock content %}

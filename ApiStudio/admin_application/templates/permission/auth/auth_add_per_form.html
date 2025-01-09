@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load base_temp_tags %}
+{% block custom_menus %}
+    {% include "admin_menus.html" %}
+{% endblock custom_menus %}
+
+{% block content %}
+    <style>
+        #permissionField {
+            display: none;
+        }
+    </style>
+    
+    
+     <h4 class="fw-bold py-1">Application Groups / Authentication Permission / uid ({{ type_id_value }})</h4>
+    
+
+    <div class="card mb-4">
+    <div class="card-body">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+            <div class="mb-3 col-md-4" id="dbCol">
+                <label for="dbConnection" class="form-label">App ID</label>
+                  <input class="form-control" name="app_id" value="{{ type_id_value }}" readonly>
+            </div>
+
+            <div class="mb-3 col-md-4" id="dbCol">
+                <label for="dbConnection" class="form-label">Username</label>
+                  <input class="form-control" name="username" value="{{ username }}" readonly>
+            </div>
+            
+            <div class="mb-3 col-md-4">
+                <label for="dbConnection" class="form-label">Role</label>
+                   <select class="form-control" id="role" name="role" onchange="Permission(this);" required>
+                      <option value="" selected="">----Selected -----</option>
+                    <option value="owner">Owner</option>
+                    <option value="member">Member</option>
+                   
+                </select>
+            </div>
+
+                <div class="mb-3 col-md-6" id="permissionField">
+                    <label for="dbConnection" class="form-label">Permission Group</label>
+                    <div class="list-group">
+                        {% for pre_choice in permissions_choices %}
+                        <label class="list-group-item">
+                            <input class="form-check-input me-1 userpri-checkbox" name="userpri" type="checkbox"
+                                   value="{{ pre_choice.group_name }}">
+                          {{ pre_choice.group_name }}
+                        </label>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+
+
+                <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+</div>
+
+
+    
+    <script>
+        function Permission(element){
+            let permissionField = document.getElementById('permissionField');
+            if(element.value === 'owner'){
+                permissionField.style.display = 'none';
+            }else{
+                  permissionField.style.display = 'block';
+                
+            }
+           
+        }
+    </script>
+    
+    
+
+{% endblock content %}

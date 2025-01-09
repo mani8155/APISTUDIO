@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load base_temp_tags %}
+{% block custom_menus %}
+    {% include "admin_menus.html" %}
+{% endblock custom_menus %}
+
+{% block content %}
+    
+    <h4 class="fw-bold py-1">
+    Application Groups / Authentication Permission
+</h4>
+    
+    
+<div class="card mt-4">
+    <div class="table-responsive text-nowrap mt-2">
+        <table class="table" id="example">
+            <thead>
+                <tr>
+                    <th>uid</th>
+                    <th>secretkey</th>
+                    <th></th>
+                    
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+            {% for obj in obj %}
+                    
+                        <tr>
+                            <td>{{ obj.uid }}</td>
+                            <td>{{ obj.secret_key }}</td>
+                            <td>
+                                <a class="btn btn-sm btn-primary" href="{% url 'auth_app_id_permission' obj.uid %}">Select</a>
+                            </td>
+                        </tr>
+                  
+           
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}

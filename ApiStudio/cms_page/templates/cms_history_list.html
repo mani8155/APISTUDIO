@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+{% block custom_menus %}
+  {% include "user_menus.html" %}
+{% endblock custom_menus %}
+{% block content %}
+{% load base_temp_tags %}
+<h4 class="fw-bold py-3 mb-2">CMS Page Revision List</h4>
+
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col">
+                <p>API Name: <strong>{{cms_history_parent.api_name}}</strong></p>
+                <p>UID: <strong>{{cms_history_parent.uid}}</strong></p>
+            </div>
+            <div class="col">
+                <p>File Type:  {% if cms_history_parent.api_property|cms_file_type == 'html' %}
+                        <span class="badge rounded-pill bg-label-warning">{{ cms_history_parent.api_property|cms_file_type|title }}</span>
+                        {% else %}
+                          <span class="badge rounded-pill bg-label-danger">{{ cms_history_parent.api_property|cms_file_type|title }}</span>
+                        {% endif %} </p>
+                <p>API Code: <strong>{{cms_history_parent.api_code_name|trim_file_name}}</strong></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="card mt-4">
+    <div class="table-responsive text-nowrap mt-2">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>UID</th>
+                    <th>Created On</th>
+                    <th>Updated On</th>
+                    <th>API Code</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+                {% for mig in history_list_data %}
+                    <tr>
+                        <td>{{mig.uid}}</td>
+                        <td>{{mig.created_on}}</td>
+                        <td>{{mig.updated_on}}</td>
+                        <td>{{mig.api_code_name|trim_file_name}}</td>
+                        <td>
+{#                            <button class="btn btn-sm btn-icon btn-primary" data-bs-toggle="modal" data-bs-target="#apiCopy{{mig.id}}">#}
+{#                                <span class="tf-icons bx bx-copy"></span>#}
+{#                            </button>#}
+
+                             <a href="{% url 'copy_file' mig.id %}" class="btn btn-sm btn-icon btn-primary">
+                                <span class="tf-icons bx bx-copy"></span>
+                            </a>
+
+                            <button class="btn btn-sm btn-icon btn-primary" data-bs-toggle="modal" data-bs-target="#apiRevert{{mig.id}}">
+                                <span class="tf-icons bx bxs-arrow-from-right"></span>
+                            </button>
+                        </td>
+                    </tr>
+
+
+                    <div class="modal fade" id="apiCopy{{mig.id}}" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel1">Copy</h5>
+                              <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                              ></button>
+                            </div>
+                            <form method="POST" action="{% url 'api_revert_file' %}">
+                               <div class="modal-body">
+                                {% csrf_token %}
+
+                                <div class="mb-3">
+                                    <label class="form-label">UID</label>
+                                    <input type="text" name="uid" class="form-control" required="" id="id_uid">
+                                </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                        Close
+                                    </button>
+                                    <button type="submit" name="form_request" value="api_copy" class="btn btn-primary">
+                                        Send
+                                    </button>
+                                </div>
+                            </form>
+                          </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="apiRevert{{mig.id}}" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel1">Revert</h5>
+                              <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                              ></button>
+                            </div>
+                            <form method="POST" action="{% url 'api_revert_file' %}">
+                               <div class="modal-body">
+                                {% csrf_token %}
+                                <input type="hidden" name="id" value="{{mig.id}}">
+                                <input type="hidden" name="uid" value="{{mig.uid}}">
+                                <input type="hidden" name="file_name" value="{{mig.api_code_name}}">
+                                <p>Are you sure you want to revert api: <b>{{mig.uid}}</b>?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                        Close
+                                    </button>
+                                    <button type="submit" name="form_request" value="api_revert" class="btn btn-primary">
+                                        Send
+                                    </button>
+                                </div>
+                            </form>
+                          </div>
+                        </div>
+                    </div>
+
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock content %}

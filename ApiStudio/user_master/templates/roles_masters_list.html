@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block custom_menus %}
+    {% include "admin_menus.html" %}
+{% endblock custom_menus %}
+
+{% block content %}
+    <h4 class="fw-bold py-3 mb-4">Roles Masters</h4>
+    <div class="demo-inline-spacing">
+        <a href="{% url 'add_roll_master' %}" class="btn btn-primary">
+            <span class="tf-icons bx bx-list-plus"></span>&nbsp; Add Roles Masters
+        </a>
+    </div>
+    <div class="card mt-4">
+        <div class="table-responsive text-nowrap mt-2">
+            <table class="table" id="example">
+                <thead>
+                <tr>
+                    <th>Role Name</th>
+                    <th>User Privilege</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody class="table-border-bottom-0">
+                {% for role in roles %}
+                    <tr>
+                    <td>{{ role.user_role }}</td>
+                    <td>{{ role.user_role_privilege }}</td>
+                    <td>{% if role.active %} Active
+                        {% else %} In Active
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{% url 'edit_roll_master' role.psk_id %}"
+                           class="btn btn-primary btn-icon btn-sm">
+                            <i class="bx bxs-edit"></i>
+                        </a>
+                        <a href = "{% url 'delete_roll_master' role.psk_id %}"
+                               class="btn btn-primary btn-icon btn-sm">
+                                <i class="bx bx-trash"></i>
+                        </a>
+                    </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock content %}

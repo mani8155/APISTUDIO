@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load base_temp_tags %}
+{% block custom_menus %}
+    {% include "admin_menus.html" %}
+{% endblock custom_menus %}
+
+{% block content %}
+    
+    <h4 class="fw-bold py-1">Application Groups / SQL Views Permission / uid ({{ app_id }})</h4>
+    
+{#   {{ group_name }} | {{ application_name }} | {{ type }}#}
+
+    <div class="demo-inline-spacing py-3">
+        <a href="{% url 'sql_views_select_user' app_id %}" class="btn  btn-primary">
+            <span class="tf-icons bx bx-list-plus"></span>&nbsp; Add Member
+        </a>
+    </div>
+
+
+<div class="card">
+<h5 class="m-3">Owner</h5>
+    <div class="table-responsive text-nowrap mt-2">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th> 
+                    <th>Role</th>
+                     <th>Permission</th>
+                    <th></th>
+                   
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+              {% for own in owners_obj %}
+                    <tr>
+                        <td>{{own.user.username}}</td>
+                        <td><span class="badge rounded-pill bg-label-danger">{{own.role}}</span></td>
+                        <td></td>
+                        <td><a href="{% url 'sql_edit_per_form' app_id own.user.username own.id %}"
+                               class="btn btn-primary btn-icon btn-sm">
+                            <i class="bx bxs-edit"></i>
+                        </a>
+                        </td>
+                    </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+    <br>
+    
+
+<div class="card">
+<h5 class="m-3">Members and Guests</h5>
+    <div class="table-responsive text-nowrap mt-2">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th> 
+                    <th>Role</th>
+                     <th>Permission</th>
+                     <th></th>
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+              {% for mem in members_obj %}
+                    <tr>
+                        <td>{{mem.user.username}}</td>
+                        <td><span class="badge rounded-pill bg-label-success">{{mem.role}}</span></td>
+                        <td>{{ mem.group_name }}</td>
+                        <td><a href="{% url 'sql_edit_per_form' app_id mem.user.username mem.id %}"
+                               class="btn btn-primary btn-icon btn-sm">
+                            <i class="bx bxs-edit"></i>
+                        </a>
+                        </td>
+                    </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}

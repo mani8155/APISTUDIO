@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block custom_menus %}
+    {% include "admin_menus.html" %}
+{% endblock custom_menus %}
+
+{% block content %}
+    <h4 class="fw-bold py-2 mb-2">Menu Elements</h4>
+    <div class="demo-inline-spacing">
+        <a href="{% url "get_menu_api_uids" %}" class="btn btn-primary">
+            <span class="tf-icons bx bx-list-plus"></span>&nbsp; Add New
+        </a>
+    </div>
+    <div class="card mt-4">
+        <div class="table-responsive text-nowrap mt-2">
+            <table class="table" id="example">
+                <thead>
+                <tr>
+                    <th>menu uid</th>
+                    <th>menu name</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody class="table-border-bottom-0">
+                {% for menu in menu_elements %}
+                    <tr>
+                        <td>{{ menu.menu_uid }}</td>
+                        <td>{{ menu.menu_name }}</td>
+                        <td>{{ menu.active }}</td>
+
+
+                        <td>
+                            <a href="{% url 'edit_menu' menu.psk_id %}" class="btn btn-sm btn-icon btn-primary">
+                                <i class="bx bxs-edit"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock content %}

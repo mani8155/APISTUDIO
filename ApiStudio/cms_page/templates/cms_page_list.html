@@ -1,0 +1,300 @@
+{% extends "base.html" %}
+
+{% block custom_menus %}
+  {% include "user_menus.html" %}
+{% endblock custom_menus %}
+{% load base_temp_tags %}
+{% block content %}
+
+
+
+<h4 class="fw-bold py-3 mb-4">CMS Page</h4>
+
+{% if 'create' in permission or user.is_superuser or user.first_name == 'admin' %}
+    <a href="{% url 'uid_use_add_form' %}" class="btn btn-primary">
+        <span class="tf-icons bx bx-list-plus"></span>&nbsp; Add New
+    </a>
+{% endif %}
+
+
+<div class="card mt-4">
+    <div class="table-responsive text-nowrap mt-3">
+        <table class="table py-3" id="example" >
+            <thead>
+                <tr>
+                    <th>Action</th>
+                    <th>API Name</th>
+                    <th>API Type</th>
+                    <th>API Method</th>
+                    <th>UID</th>
+                    <th>DB Connection</th>
+                    <th>File Type</th>
+                    <th>File Name</th>
+
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+                {% for cms in cms_page %}
+                    <tr>
+                       <td>
+                           {% if 'settings' in permission or user.is_superuser or user.first_name == 'admin' %}
+
+
+                                   <div class="btn-group">
+                                       <button class="btn btn-dark btn-sm dropdown-toggle dropdown-toggle-split"
+                                               data-bs-toggle="dropdown" aria-expanded="false">
+                                           <i class='bx bx-cog'></i><span class="visually-hidden">Toggle Dropdown</span>
+                                       </button>
+
+                                       {% if user.is_superuser or user.first_name == 'admin' %}
+                                           <ul class="dropdown-menu">
+                                               <li>
+                                                   <a class="dropdown-item"
+                                                      href="{% url 'cms_update_form' cms.id %}">Edit File</a>
+                                               </li>
+                                               <li>
+                                                   <a class="dropdown-item"
+                                                      href="{% url 'change_api_name' cms.id %}">Edit ApiName</a>
+                                               </li>
+
+                                               {% if cms.api_property|cms_file_type == 'html' %}
+                                                   <li>
+                                                       <a class="dropdown-item"
+                                                          href="{% url 'download_html' cms.uid %}">Download File</a>
+                                                   </li>
+                                                   <li>
+                                                       <a class="dropdown-item"
+                                                          href="{% url 'page' cms.uid %}" target="_blank">Run File</a>
+                                                   </li>
+                                               {% else %}
+                                                   <li>
+                                                       <a class="dropdown-item"
+                                                          href="{% url 'download_markdown' cms.uid %}">Download File</a>
+                                                   </li>
+                                                   <li>
+                                                       <a class="dropdown-item"
+                                                          href="{% url 'mark-down' cms.uid %}" target="_blank">Run
+                                                           File</a>
+                                                   </li>
+                                               {% endif %}
+
+                                               <li>
+                                                   <a class="dropdown-item"
+                                                      href="{% url 'cms_eye_view' cms.id %}">View File</a>
+                                               </li>
+                                               <li>
+                                                   <a class="dropdown-item"
+                                                      href="{% url 'cms_api_docs' cms.id %}">API Docs</a>
+                                               </li>
+                                               <li>
+                                                   <a class="dropdown-item"
+                                                      href="{% url 'cms_history_list' cms.id %}">Revision History</a>
+                                               </li>
+                                               <li>
+                                                   <a class="dropdown-item"
+                                                      href="{% url 'cms_log_history' cms.id %}">Log History</a>
+                                               </li>
+
+                                           </ul>
+                                           </div>
+                                       {% endif %}
+
+
+                               {% for dict_item in permission_action %}
+                                   {% for key, value in dict_item.items %}
+                                       {% if key == cms.id %}
+
+                                               <ul class="dropdown-menu">
+
+                                                 {% if 'join' in value %}
+                                                    <li>
+                                                        <a class="dropdown-item"
+                                                           href="{% url 'cms_join_read_permission' cms.uid %}">Join</a>
+                                                    </li>
+                                                {% endif %}
+
+  {% if 'edit' in value %}
+                                                   <li>
+                                                       <a class="dropdown-item"
+                                                          href="{% url 'cms_update_form' cms.id %}">Edit File</a>
+                                                   </li>
+
+                                                   <li>
+                                                       <a class="dropdown-item"
+                                                          href="{% url 'change_api_name' cms.id %}">Edit ApiName</a>
+                                                   </li>
+
+ {% endif %}
+
+              {% if 'download' in value %}
+                                                   {% if cms.api_property|cms_file_type == 'html' %}
+
+                                                       <li>
+                                                           <a class="dropdown-item"
+                                                              href="{% url 'download_html' cms.uid %}">Download File</a>
+                                                       </li>
+
+                                                       <li>
+                                                           <a class="dropdown-item"
+                                                              href="{% url 'page' cms.uid %}" target="_blank">Run
+                                                               File</a>
+                                                       </li>
+                                                   {% else %}
+                                                       <li>
+                                                           <a class="dropdown-item"
+                                                              href="{% url 'download_markdown' cms.uid %}">Download
+                                                               File</a>
+                                                       </li>
+                                                       <li>
+                                                           <a class="dropdown-item"
+                                                              href="{% url 'mark-down' cms.uid %}" target="_blank">Run
+                                                               File</a>
+                                                       </li>
+                                                   {% endif %}
+
+                   {% endif %}
+
+                    {% if 'view_file' in value %}
+                                                   <li>
+                                                       <a class="dropdown-item"
+                                                          href="{% url 'cms_eye_view' cms.id %}">View File</a>
+                                                   </li>
+                         {% endif %}
+
+                          {% if 'api_docs' in value %}
+                                                   <li>
+                                                       <a class="dropdown-item"
+                                                          href="{% url 'cms_api_docs' cms.id %}">API Docs</a>
+                                                   </li>
+
+                               {% endif %}
+
+                                {% if 'revision' in value %}
+                                                   <li>
+                                                       <a class="dropdown-item"
+                                                          href="{% url 'cms_history_list' cms.id %}">Revision
+                                                           History</a>
+                                                   </li>
+                                     {% endif %}
+
+                                      {% if 'loghistory' in value %}
+                                                   <li>
+                                                       <a class="dropdown-item"
+                                                          href="{% url 'cms_log_history' cms.id %}">Log History</a>
+                                                   </li>
+ {% endif %}
+                                               </ul>
+
+                                       {% endif %}
+                                   {% endfor %}
+                               {% endfor %}
+
+
+                        {% endif %}
+                        </td>
+
+                        <td>{{cms.api_name}}</td>
+                        <td>{{cms.api_type}}</td>
+                         <td><span class="badge rounded-pill bg-label-success">{{cms.api_method}}</span></td>
+                        <td>{{cms.uid}}</td>
+                        <td>{{cms.db_connection_name}}</td>
+
+                        {% if cms.api_property|cms_file_type == 'html' %}
+                        <td><span class="badge rounded-pill bg-label-warning">{{ cms.api_property|cms_file_type|title }}</span></td>
+                        {% else %}
+                          <td><span class="badge rounded-pill bg-label-danger">{{ cms.api_property|cms_file_type|title }}</span></td>
+                        {% endif %}
+
+
+                         <td><b>{{cms.api_code_name|trim_file_name}}</b></td>
+
+                        </td>
+
+
+
+
+
+
+                     <div class="modal fade" id="basicModal{{ cms.id }}" tabindex="-1" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel1">{{ cms.api_name}}</h5>
+                                <button
+                                  type="button"
+                                  class="btn-close"
+                                  data-bs-dismiss="modal"
+                                  aria-label="Close"
+                                ></button>
+                              </div>
+
+                              <div class="modal-body">
+                                <div class="row g-2">
+                                </div>
+                                <div class="row g-2">
+                                  <div class="col mb-0">
+
+                                    <div class="btn-group">
+                                      <a class="dropdown-item dropdown-toggle" data-bs-toggle="dropdown"
+                                         href="{% url 'cms_update_form' cms.id %}"><i
+                                              class="bx bxs-edit me-1"></i> Edit</a>
+
+                                      <ul class="dropdown-menu" style="">
+                                          <li><a class="dropdown-item" href="{% url 'cms_update_form' cms.id %}">File</a></li>
+                                          <li><a class="dropdown-item" href="{% url 'change_api_name' cms.id %}">API Name</a></li>
+
+                                      </ul>
+                                  </div>
+
+
+                                      {% if cms.api_property|cms_file_type == 'html' %}
+                                          <a class="dropdown-item" href="{% url 'download_html' cms.uid %}"><i
+                                                  class="bx bxs-download"></i> Download File</a>
+                                          <a class="dropdown-item" href="{% url 'page' cms.uid %}" target="_blank"><i
+                                                  class='bx bx-play'></i> Run File</a>
+                                      {% else %}
+                                          <a class="dropdown-item" href="{% url 'download_markdown' cms.uid %}"><i
+                                                  class="bx bxs-download"></i> Download File</a>
+                                          <a class="dropdown-item" href="{% url 'mark-down' cms.uid %}" target="_blank"><i
+                                                  class='bx bx-play'></i> Run File</a>
+                                      {% endif %}
+
+                                      <a class="dropdown-item" href="{% url 'cms_log_history' cms.id %}" ><i
+                                        class='bx bxs-time-five'></i> Log History</a>
+
+                                  
+
+                                  </div>
+                                    <div class="col mb-0">
+
+                                        <a class="dropdown-item" href="{% url 'cms_eye_view' cms.id %}"><i
+                                                class="bi bi-eye-fill"></i> View File</a>
+
+                                         <a class="dropdown-item" href="{% url 'cms_history_list' cms.id %}"><i class="bx bxs-book-content"></i> Revision History</a>
+                                         <a class="dropdown-item" href="{%url 'cms_api_docs' cms.id %}"><i class='bx bxs-map-alt me-1'></i> API Docs</a>
+                                    </div>
+                                </div>
+                              </div>
+
+                            </div>
+                          </div>
+                        </div>
+
+
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+{% endblock content %}

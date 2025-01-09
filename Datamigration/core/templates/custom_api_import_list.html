@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h4 class="fw-bold py-3 mb-4">Custom API Import List</h4>
+
+    <div class="card mt-4">
+        <h5 class="card-header">APIs</h5>
+        <div class="card-body">
+            <ul>
+                {% for api in api_meta %}
+                    <li>{{ api.api_name }} | <b>{{ api.uid }}</b></li>
+                {% endfor %}
+            </ul>
+
+            {% if imp_errors %}
+                <h5>Import Errors</h5>
+                <ul>
+                    {% for error in imp_errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock content %}

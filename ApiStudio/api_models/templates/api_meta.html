@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block custom_menus %}
+  {% include "user_menus.html" %}
+{% endblock custom_menus %}
+{% block content %}
+{% load base_temp_tags %}
+<h4 class="fw-bold py-3 mb-4">API Meta List</h4>
+<a href="{% url "create_api_meta" %}" class="btn btn-primary">
+    <span class="tf-icons bx bx-list-plus"></span>&nbsp; Add New
+</a>
+
+<div class="card mt-4">
+    <div class="table-responsive text-nowrap mt-2">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>API Name</th>
+                    <th>API Type</th>
+                    <th>API Method</th>
+                    <th>Python Code</th> 
+                    <th></th> 
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+                {% for api in api_meta %}
+                    {% if api.api_source == "dash" %}
+                        <tr>
+                            <td>{{api.api_name}}</td>
+                            <td>{{api.api_type}}</td>
+                            <td><span class="badge rounded-pill bg-label-{{api.api_method|badge}}">{{api.api_method}}</span></td>
+                            <td>{{api.python_code}}</td>
+                            <td></td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% comment %} <div class="card bd-code-snippet mt-2">
+    <div class="higlight">
+        <pre tabindex="0" class="chroma">
+            <code class="language-python" data-lang="python">
+    def create_api_meta(request):
+        form = ApiMetaForm()
+
+        if request.method == "POST":
+            form = ApiMetaForm(request.POST, request.FILES)
+            if form.is_valid():
+                api_url = f'{CRUD_API_URL}create/api/'
+                payload = {
+                    'api_name': form.cleaned_data['api_name'],
+                    'table_details': "{}",
+                    'api_type': form.cleaned_data['api_type'],
+                    'api_method': form.cleaned_data['api_method'],
+                }
+                files = {
+                    'python_code': (request.FILES['python_code'].name, request.FILES['python_code'].file, 'text/x-python')
+                }
+                headers = {
+                    'accept': 'application/json',
+                }
+                response = rq.post(api_url, data=payload, files=files, headers=headers)
+                if response.status_code == 200:
+                    return redirect('api_meta_list')
+                else:
+                    messages.error(request, response.text)
+            else:
+                messages.error(request, "Not Valid")
+
+        context = {
+            "form": form,
+            "title": "New Api Meta"
+        }
+        return render(request, 'forms.html', context)     
+            </code>
+        <pre>
+    </div>
+</div> {% endcomment %}
+{% endblock content %}

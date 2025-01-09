@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% load base_temp_tags %}
+{% block custom_menus %}
+    {% include "admin_menus.html" %}
+{% endblock custom_menus %}
+
+{% block content %}
+<h4 class="fw-bold py-3">
+    {{ app_group.name }}<span class="text-muted fw-light"> / {{ app_group.group_id }}</span>
+</h4>
+<div class="row mt-4">
+    <div class="col-auto">
+        <a href="{% url "create_application" app_group.psk_id %}" class="btn btn-primary">
+            <span class="tf-icons bx bx-list-plus"></span>&nbsp; Add Application
+        </a>
+    </div>
+    <div class="col">
+        <button type="button" class="btn btn-icon btn-success" data-bs-toggle="modal" data-bs-target="#searchModel">
+            <i class='bx bx-search-alt'></i>
+          </button>
+          <div class="modal fade" id="searchModel" tabindex="-1" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel1">Search</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form method="post">
+                    <div class="modal-body">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="id_field" class="form-label">Field</label>
+                            <select class="form-select" id="id_field" name="field" aria-label="Default select example">
+                              <option value="name">Name</option>
+                              <option value="app_id">App Id</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_search" class="form-label">Search</label>
+                            <input id="id_search" class="form-control" type="text" name="search" placeholder="Search...">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                            Close
+                        </button>
+                        <button type="submit" class="btn btn-success">Search</button>
+                    </div>
+                </form>
+              </div>
+            </div>
+          </div>
+    </div>
+</div>
+<div class="card mt-4">
+    <div class="table-responsive text-nowrap mt-2">
+        <table class="table" id="example">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>App ID</th>
+                    <th>Type</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+                {% for app in applications %}
+                    <tr>
+                        <td>{{app.name}}</td>
+                        <td>{{app.app_id}}</td>
+                        <td>{{app.type|capfirst}}</td>
+                        <td>
+
+                            <a href="{% url "new_edit_application" group_id=app_group.psk_id app_id=app.psk_id %}" class="btn btn-sm btn-icon btn-primary">
+                                <span class="tf-icons bx bxs-pencil"></span>
+                            </a>
+                            <a href="{% url "select_move_group" group_id=app_group.psk_id app_id=app.psk_id %}" class="btn btn-sm btn-icon btn-secondary">
+                                <span class="tf-icons bx bx-folder-open"></span>
+                            </a>
+                             <a href="{% url 'app_id_permission_view' group_id=app_group.psk_id app_id=app.psk_id %}" class="btn btn-sm btn-icon btn-info">
+                                <span class="tf-icons bx bxs-user-detail"></span>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}

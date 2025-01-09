@@ -1,0 +1,279 @@
+{% extends "base.html" %}
+
+{% block custom_menus %}
+    {% include "admin_menus.html" %}
+{% endblock custom_menus %}
+
+{% block content %}
+    <h4 class="fw-bold py-3 mb-4">Application Groups</h4>
+    {% if create == 200 %}
+        <div class="row mb-4">
+            <div class="col-auto">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                        <span class="tf-icons bx bx-list-plus"></span>&nbsp; Add New Group
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item" href="{% url "create_parent_application" %}">
+                                <i class='bx bx-checkbox'></i> Parent Group
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{% url "select_application_group" %}">
+                                <i class='bx bx-copy'></i> Sub Group
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-auto">
+                <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                    <i class='bx bx-search-alt'></i>
+                </button>
+                <ul class="dropdown-menu" style="">
+                    <li>
+                        <a class="dropdown-item d-flex align-items-center" data-bs-toggle="modal"
+                           data-bs-target="#searchModel"><i
+                            class="bx bx-chevron-right scaleX-n1-rtl"></i>Group</a>
+                    </li>
+                       <li>
+                        <a class="dropdown-item d-flex align-items-center" data-bs-toggle="modal"
+                           data-bs-target="#searchModel2"><i
+                            class="bx bx-chevron-right scaleX-n1-rtl"></i>Application</a>
+                    </li>
+                </ul>
+                
+                <div class="modal fade" id="searchModel" tabindex="-1" style="display: none;" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel1">Search</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <form method="post">
+                                <div class="modal-body">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="search_type" value="search">
+                                    <div class="mb-3">
+                                        <label for="id_field" class="form-label">Field</label>
+                                        <select class="form-select" id="id_field" name="field"
+                                                aria-label="Default select example">
+                                             <option value="group_id">Group Id</option>
+                                            <option value="name">Group Name</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="id_search" class="form-label">Search</label>
+                                        <input id="id_search" class="form-control" type="text" name="search"
+                                               placeholder="Search...">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                        Close
+                                    </button>
+                                    <button type="submit" class="btn btn-success">Search</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+                 <div class="modal fade" id="searchModel2" tabindex="-1" style="display: none;" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel1">Search</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <form method="post" action="{% url 'application_search' %}">
+                                <div class="modal-body">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="search_type" value="search">
+                                    <div class="mb-3">
+                                        <label for="id_field" class="form-label">Field</label>
+                                        <select class="form-select" id="id_field" name="field"
+                                                aria-label="Default select example">
+                                            <option value="app_id">Application Id</option>
+                                            <option value="app_name">Application Name</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3"> 
+                                        <label for="id_search" class="form-label">Search</label>
+                                        <input id="id_search" class="form-control" type="text" name="search"
+                                               placeholder="Search...">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                        Close
+                                    </button>
+                                    <button type="submit" class="btn btn-success">Search</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="col-auto">
+                <button type="button" class="btn btn-icon btn-success" data-bs-toggle="modal"
+                        data-bs-target="#sortModel">
+                    <i class='bx bx-sort'></i>
+                </button>
+                <div class="modal fade" id="sortModel" tabindex="-1" style="display: none;" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel1">Sort</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <form method="post">
+                                <div class="modal-body">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="search_type" value="sort">
+                                    <div class="mb-3">
+                                        <label for="id_field" class="form-label">Field</label>
+                                        <select class="form-select" id="id_field" name="field"
+                                                aria-label="Default select example">
+                                            <option value="name">Name</option>
+                                            <option value="group_id">Group Id</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="id_order" class="form-label">Order By</label>
+                                        <select class="form-select" id="id_order" name="order"
+                                                aria-label="Default select example">
+                                            <option value="order_asc">Ascending</option>
+                                            <option value="order_desc">Descending</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                        Close
+                                    </button>
+                                    <button type="submit" class="btn btn-success">Sort</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-auto">
+                <button type="button" class="btn btn-icon btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#importModel">
+                    <i class='bx bx-import'></i>
+                </button>
+                <div class="modal fade" id="importModel" tabindex="-1" style="display: none;" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel1">Import</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <form method="post" action="{% url 'import_application' %}">
+                                <div class="modal-body">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="search_type" value="sort">
+                                    <div class="mb-3">
+                                        <label for="id_import_url" class="form-label">Import From</label>
+                                        <input type="text" id="id_import_url" class="form-control" name="import_url" value="{{ GOLDEN_DUMP }}">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                        Close
+                                    </button>
+                                    <button type="submit" class="btn btn-primary">Import</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+        </div>
+    {% else %}
+        <div class="alert alert-danger" role="alert">Table Not Found</div>
+    {% endif %}
+
+
+    <div class="demo-inline-spacing mt-3">
+        <ul class="list-group">
+            {% for group in app_groups %}
+                {% if not group.parent_id %}
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-9">
+                                <b>[{{ group.group_id }}] {{ group.name }}</b>
+                            </div>
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <a href="{% url "parent_edit_application_group" group.psk_id %}"
+                                           class="btn btn-sm btn-icon btn-primary">
+                                            <span class="tf-icons bx bxs-pencil"></span>
+                                        </a>
+                                    </div>
+                                    {% if group.child %}
+                                        <div class="col-auto">
+                                            <button class="btn btn-success btn-sm btn-icon me-1 collapsed" type="button"
+                                                    data-bs-toggle="collapse"
+                                                    data-bs-target="#parentGroup-{{ group.psk_id }}"
+                                                    aria-expanded="false"
+                                                    aria-controls="parentGroup-{{ group.psk_id }}">
+                                                <span class="tf-icons bx bx-list-ul"></span>
+                                            </button>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% if group.child %}
+                            <div class="collapse m-3" id="parentGroup-{{ group.psk_id }}" style="">
+                                <ul class="list-group">
+                                    {% for child in app_groups %}
+                                        {% if child.parent_id == group.psk_id %}
+                                            <li class="list-group-item list-group-item-dark">
+                                                <div class="row">
+                                                    <div class="col-9">
+                                                        <b>[{{ child.group_id }}] {{ child.name }}</b>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="row">
+                                                            <div class="col-auto">
+                                                                <a href="{% url "edit_application_group" child.psk_id %}"
+                                                                   class="btn btn-sm btn-icon btn-dark">
+                                                                    <span class="tf-icons bx bxs-pencil"></span>
+                                                                </a>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <a href="{% url "view_application_group" child.psk_id %}"
+                                                                   class="btn btn-sm btn-icon btn-dark">
+                                                                    <span class="tf-icons bx bx-table"></span>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% endif %}
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+    
+{% endblock content %}

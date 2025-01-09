@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+{% block custom_menus %}
+    {% include "user_menus.html" %}
+{% endblock custom_menus %}
+{% block content %}
+    <h4 class="fw-bold py-3 mb-4">Auth Tokens</h4>
+
+    <div class="row mt-4">
+
+        <div class="col-auto">
+            <div class="btn-group">
+                  {% if 'create' in permission or user.is_superuser or user.first_name == 'admin' %}
+                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    <span class="tf-icons bx bx-list-plus"></span>&nbsp; Add New
+                </button>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a class="dropdown-item" href="{% url 'select_auth_group' %}">
+                            Application Group
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{% url 'select_app' %}">
+                            Application
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{% url 'select_sql_views' %}">
+                            Sql Views
+                        </a>
+                    </li>
+                </ul>
+                {% endif %}
+            </div>
+        </div>
+
+
+        <div class="col">
+            <div class="row justify-content-end">
+                <div class="col-sm-4">
+                    <form method="post" action="{% url 'auth_list' %}">
+                        {% csrf_token %}
+                        <select id="authSelect" class="form-select" name="authSelect" onchange="this.form.submit()">
+                            <option value="" {% if selected_filter == "" %}selected{% endif %}>All</option>
+                            <option value="app_group" {% if selected_filter == "app_group" %}selected{% endif %}>
+                                Application Group
+                            </option>
+                            <option value="app_name" {% if selected_filter == "app_name" %}selected{% endif %}>
+                                Application
+                            </option>
+                            <option value="sql_views" {% if selected_filter == "sql_views" %}selected{% endif %}>Sql
+                                Views
+                            </option>
+                        </select>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+    <div class="card mt-4">
+        <div class="table-responsive text-nowrap mt-2">
+            <table class="table py-3" id="example">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>uid</th>
+                    <th>source key</th>
+                    <th>expiry</th>
+                    <th>Active</th>
+{#                    <th>secret key</th>#}
+
+                </tr>
+                </thead>
+                <tbody class="table-border-bottom-0">
+                {% for auth in auth_list %}
+                    <tr>
+
+                        <td>
+                          {% if 'settings' in permission or user.is_superuser or user.first_name == 'admin' %}
+
+                            <div class="btn-group">
+                                <button class="btn btn-dark btn-sm dropdown-toggle dropdown-toggle-split"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class='bx bx-cog'></i><span class="visually-hidden">Toggle Dropdown</span>
+                                </button>
+
+   {% if user.is_superuser or user.first_name == 'admin' %}
+                                <ul class="dropdown-menu">
+                                    {% if auth.active %}
+                                        <li>
+                                            <a class="dropdown-item"
+                                               href="{% url 'run_stop_action' auth.id %}">In-Active</a>
+                                        </li>
+                                    {% else %}
+                                        <li>
+                                            <a class="dropdown-item"
+                                               href="{% url 'run_stop_action' auth.id %}">Active</a>
+                                        </li>
+                                    {% endif %}
+
+                                 <li>
+                                            <a class="dropdown-item"
+                                               href="{% url 'view_secrete_key' auth.id %}">View Secret Key</a>
+                                        </li>
+                                </ul>
+                            </div>
+                                      {% endif %}
+
+                              {% for dict_item in permission_action %}
+                                  {% for key, value in dict_item.items %}
+                                      {% if key == auth.id %}
+
+                                              <ul class="dropdown-menu">
+                                              {% if 'active' in value %}
+                                                  {% if auth.active %}
+                                                      <li>
+                                                          <a class="dropdown-item"
+                                                             href="{% url 'run_stop_action' auth.id %}">In-Active</a>
+                                                      </li>
+                                                  {% else %}
+                                                      <li>
+                                                          <a class="dropdown-item"
+                                                             href="{% url 'run_stop_action' auth.id %}">Active</a>
+                                                      </li>
+                                                  {% endif %}
+
+                                                  {% if 'view_secret_key' in value %}
+                                                      <li>
+                                                          <a class="dropdown-item"
+                                                             href="{% url 'view_secrete_key' auth.id %}">View Secret
+                                                              Key</a>
+                                                      </li>
+                                                  {% endif %}
+
+                                                   {% endif %}
+                                              </ul>
+
+
+                                      {% endif %}
+                                  {% endfor %}
+                              {% endfor %}
+
+                        {% endif %}
+
+                        </td>
+                        <td>{{ auth.uid }}</td>
+                        <td>{{ auth.api_source }}</td>
+                        <td>{% if auth.expiry_period == "never" %}NEVER{% else %}
+                            {{ auth.expiry_datetime }}{% endif %} </td>
+
+                            {% if auth.active %}
+                            <td><span class="badge rounded-pill bg-label-success">
+                                <i style="font-size: 20px;" class='bx bx-message-square-check'></i>
+                            </span></td>
+                            
+                            {% else %}
+                            <td><span class="badge rounded-pill bg-label-danger">
+                                <i style="font-size: 20px;" class='bx bx-message-square-x'></i>
+                            </span></td>
+                            {% endif %}
+     
+{#                        <td>{{ auth.secret_key }}</td>#}
+
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock content %}

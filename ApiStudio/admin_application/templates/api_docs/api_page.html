@@ -1,0 +1,182 @@
+{#{% extends "base.html" %}#}
+{##}
+{#{% block custom_menus %}#}
+{#    {% include "api_docs_menu.html" %}#}
+{#{% endblock custom_menus %}#}
+{##}
+{#{% block content %}#}
+{##}
+{##}
+{#    <div class="col-12">#}
+{#    <div class="card mb-4">#}
+{#      <h5 class="card-header">Basic Buttons</h5>#}
+{#      <div class="card-body">#}
+{#        <small class="text-light fw-medium">Default</small>#}
+{#        <div class="demo-inline-spacing">#}
+{#          <button type="button" class="btn btn-primary">Primary</button>#}
+{#          <button type="button" class="btn btn-secondary">Secondary</button>#}
+{#          <button type="button" class="btn btn-success">Success</button>#}
+{#          <button type="button" class="btn btn-danger">Danger</button>#}
+{#          <button type="button" class="btn btn-warning">Warning</button>#}
+{#          <button type="button" class="btn btn-info">Info</button>#}
+{#          <button type="button" class="btn btn-dark">Dark</button>#}
+{#        </div>#}
+{#      </div>#}
+{#      <hr class="m-0">#}
+{#      <div class="card-body">#}
+{#        <small class="text-light fw-medium">Rounded</small>#}
+{#        <div class="demo-inline-spacing">#}
+{#          <button type="button" class="btn rounded-pill btn-primary">Primary</button>#}
+{#          <button type="button" class="btn rounded-pill btn-secondary">Secondary</button>#}
+{#          <button type="button" class="btn rounded-pill btn-success">Success</button>#}
+{#          <button type="button" class="btn rounded-pill btn-danger">Danger</button>#}
+{#          <button type="button" class="btn rounded-pill btn-warning">Warning</button>#}
+{#          <button type="button" class="btn rounded-pill btn-info">Info</button>#}
+{#          <button type="button" class="btn rounded-pill btn-dark">Dark</button>#}
+{#        </div>#}
+{#      </div>#}
+{#    </div>#}
+{#  </div>#}
+{#    #}
+{#    #}
+{#{% endblock content %}#}
+
+
+<!DOCTYPE html>
+{% load static %}
+<html
+        lang="en"
+        class="light-style customizer-hide"
+        dir="ltr"
+        data-theme="theme-default"
+        data-assets-path="{% static 'assets' %}"
+        data-template="vertical-menu-template-free"
+>
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Api Studio</title>
+    <link
+            rel="icon"
+            type="image/x-icon"
+            href="{% static 'assets/img/favicon/nanox.png' %}"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link
+            href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+            rel="stylesheet"
+    />
+    <link
+            rel="stylesheet"
+            href="{% static 'assets/vendor/fonts/boxicons.css' %}"
+    />
+    <link
+            rel="stylesheet"
+            href="{% static 'assets/vendor/css/core.css' %}"
+            class="template-customizer-core-css"
+    />
+    <link
+            rel="stylesheet"
+            href="{% static 'assets/vendor/css/theme-default.css' %}"
+            class="template-customizer-theme-css"
+    />
+    <link rel="stylesheet" href="{% static 'assets/css/demo.css' %}"/>
+    <link
+            rel="stylesheet"
+            href="{% static 'assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css' %}"
+    />
+    <link
+            rel="stylesheet"
+            href="{% static 'assets/vendor/libs/apex-charts/apex-charts.css' %}"
+    />
+
+    <link href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+
+    <style>
+        #example_filter {
+            padding-right: 20px;
+        }
+
+        #example_length {
+            padding-left: 20px;
+        }
+
+        #example_info {
+            padding-left: 20px;
+        }
+
+        .pagination {
+            padding-right: 20px;
+        }
+    </style>
+
+
+    <script src="{% static 'assets/vendor/js/helpers.js' %}"></script>
+    <script src="{% static 'assets/js/config.js' %}"></script>
+    {% block custom_style %}
+    {% endblock custom_style %}
+</head>
+
+<body>
+<!-- Content -->
+
+<div class="container-xxl">
+
+            <!-- Register -->
+              <div class="col-12 py-5">
+    <div class="card mb-4">
+      <h5 class="card-header">API STUDIO MICROSERVICE</h5>
+      <div class="card-body">
+        <small class="text-light fw-medium">Default</small>
+        <div class="demo-inline-spacing">
+          <a href="{{ API_URL }}crudapp" target="_blank" type="button" class="btn btn-xl btn-primary">CRUD APP</a>
+          <a href="{{ API_URL}}getapi" target="_blank" type="button" class="btn btn-xl btn-info">GET API</a>
+          <a href="{{ API_URL}}postapi" target="_blank" type="button" class="btn btn-xl btn-success">POST API</a>
+          <a href="{{ API_URL}}updateapi" target="_blank" type="button" class="btn btn-xl btn-warning">UPDATE API</a>
+          <a href="{{ API_URL}}deleteapi" target="_blank" type="button" class="btn btn-xl btn-danger">DELETE API</a>
+          <a href="{{ API_URL}}cms" target="_blank" type="button" class="btn btn-xl btn-secondary">CMS PAGE</a>
+          <a href="{{ API_URL}}coreapi" target="_blank" type="button" class="btn btn-xl btn-primary">CORE API</a>
+        </div>
+          
+           <div class="demo-inline-spacing">
+               
+          <a href="{{ API_URL }}sqlviews" target="_blank" type="button" class="btn btn-xl btn-dark">SQL VIEWS</a>
+          <a href="{{ API_URL }}auth" target="_blank" type="button" class="btn btn-xl btn-danger">AUTH API</a>
+          <a href="{{ API_URL }}db_schema_api" target="_blank" type="button" class="btn btn-xl btn-secondary">DB SCHEMA API</a>
+         
+         
+        </div>
+          
+          
+          
+      </div>
+      <hr class="m-0">
+     
+    </div>
+  </div>
+
+<!-- / Content -->
+
+<!-- Core JS -->
+<!-- build:js assets/vendor/js/core.js -->
+<script src="{% static 'assets/vendor/libs/jquery/jquery.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/popper/popper.js' %}"></script>
+<script src="{% static 'assets/vendor/js/bootstrap.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js' %}"></script>
+
+<script src="{% static 'assets/vendor/js/menu.js' %}"></script>
+<!-- endbuild -->
+
+<!-- Vendors JS -->
+
+<!-- Main JS -->
+<script src="{% static 'assets/js/main.js' %}"></script>
+
+<!-- Page JS -->
+
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h4 class="fw-bold py-3 mb-4">Export Database</h4>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                <div>
+                    <label for="exportDatabaseNameInput" class="form-label">Export Database Name</label>
+                    <input type="text" class="form-control" id="exportDatabaseNameInput" name="db_name" value="exported_database">
+                </div>
+                <div class="mt-2">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

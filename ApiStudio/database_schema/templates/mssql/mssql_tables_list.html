@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block custom_menus %}
+  {% include "user_menus.html" %}
+{% endblock custom_menus %}
+
+{%  block content %}
+
+
+
+<h4 class="fw-bold py-3 mb-4">{{ db_name }} / Tables</h4>
+<a href="{% url 'add_schema' id %}" class="btn btn-primary">
+    <span class="tf-icons bx bx-list-plus"></span>&nbsp;  New Table
+</a>
+
+<div class="card mt-4">
+    <div class="table-responsive text-nowrap mt-2">
+        <table class="table py-3" id="example">
+            <thead>
+                <tr>
+                    <th>Table Name</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+                {% for table in tables_list %}
+                    <tr>
+                        <td>{{table}}</td>
+
+                        <td>
+                            <form method="post" action="{% url 'mssql_column_list' id table %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="key" value="{{ key }}">
+                                <button type="submit" class="btn btn-sm btn-primary"><i class="bi bi-grid-1x2-fill"></i>&nbsp;
+                                    View Column
+                                </button>
+                            </form>
+                        </td>
+                          <td>
+                            <form method="post" action="{% url 'mssql_get_records' id table %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="key" value="{{ key }}">
+                                <button type="submit" class="btn btn-sm btn-primary"><i class="bi bi-grid-1x2-fill"></i>&nbsp;
+                                    View Data
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+{%  endblock content %}

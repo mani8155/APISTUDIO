@@ -1,0 +1,41 @@
+{% extends 'etlbase.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+config02.html
+
+<h4 class="fw-bold py-3 mb-4">Configurations</h4>
+
+<div class="row">
+    <!-- Basic Layout -->
+    <div class="col-xxl">
+        <div class="card mb-4">
+            <div class="card-header d-flex align-items-center justify-content-between">
+                <h5 class="mb-0">Job Configuration</h5>
+                <small class="text-muted float-end">Nanoxlabss</small>
+            </div>
+            <div class="card-body">
+                <div class="col-auto mb-1">
+                    <a href="{% url 'config_byinterval' %}" class="btn btn-primary mx-3">
+                        Run By Interval
+                    </a>
+                    <a href="{% url 'config_hourly' %}" class="btn btn-primary mx-3">
+                        Run Hourly
+                    </a>
+                    <a href="{% url 'config_daily' %}" class="btn btn-primary mx-3" >
+                        Run Daily
+                    </a>
+                    <a href="{% url 'config_weekly' %}" class="btn btn-primary mx-3">
+                        Run Weekly
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+

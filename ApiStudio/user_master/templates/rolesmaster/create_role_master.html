@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block custom_menus %}
+    {% include "admin_menus.html" %}
+{% endblock custom_menus %}
+
+{% block content %}
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.0.1/dist/css/multi-select-tag.css">
+
+<h4 class="fw-bold py-3 mb-4">Create Role</h4>
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+
+
+            <div class="mb-3" id="dbCol">
+                <label class="form-label">Role Name</label>
+                <input type="text" class="form-control" id="rolename" name="rolename">
+            </div>
+
+
+{##}
+{#                <div class="mb-3 col-md-6" id="dbCol">#}
+{#                <label for="dbConnection" class="form-label">Status</label>#}
+{#                  <select class="form-control" id="reporting" name="status">#}
+{#                    <option selected="" value="">--------- Select ---------</option>#}
+{##}
+{#                    <option value="Active">Active</option>#}
+{#                    <option value="In-Active">In-Active</option>#}
+{##}
+{#                </select>#}
+{#            </div>#}
+
+                <div class="mb-3" id="dbCol">
+                    <label for="dbConnection" class="form-label">user privilege</label>
+                    <div class="">
+                        <div class="list-group">
+                            {% for obj in user_privileges %}
+                            <label class="list-group-item">
+                                {% for menupre in menu_privilege_tbl_data %}
+                                    {% if obj.menu_privilege|add:0 == menupre.psk_id %}
+                                 <input class="form-check-input me-1 userpri-checkbox" name="userpri" type="checkbox" value="{{ obj.menu_privilege }}">
+                                {{ menupre.menu_privilege_name }}
+{% endif %}
+                                    {% endfor %}
+                            </label>
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+            <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+
+
+        </form>
+    </div>
+</div>
+</div>
+
+
+{% endblock content %}
+

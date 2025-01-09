@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block custom_menus %}
+  {% include "user_menus.html" %}
+{% endblock custom_menus %}
+
+{% block content %}
+
+
+
+<h3></h3>
+
+
+<h4 class="fw-bold py-3 mb-4"> {{ db_name }} / {{ table_name }} / columns</h4>
+
+
+<div class="card mt-4">
+    <div class="table-responsive text-nowrap mt-2">
+        <table class="table py-3" id="example">
+            <thead>
+                <tr>
+                    <th>Column Name</th>
+                    <th>Data Type</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+                  {% for column, data_type  in column_data.items %}
+                    <tr>
+                        <td>{{ column }}</td>
+                        <td>{{data_type }}</td>
+                    <td>
+                            <a href="{% url 'field_property_view' id schema_name table_name column  %}" class="btn btn-sm btn-primary btn-icon">
+                                <i class="bx bxs-detail"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock content %}

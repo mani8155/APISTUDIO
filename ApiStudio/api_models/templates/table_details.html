@@ -1,0 +1,251 @@
+{% extends "base.html" %} 
+{% block custom_menus %}
+  {% include "user_menus.html" %}
+{% endblock custom_menus %}
+{% block content %}
+
+{#    {{ permissions_list }}#}
+<h4 class="fw-bold py-3">
+    {{ table.table_name }}<span class="text-muted fw-light"> / {{ table.table_name_public }}</span>
+</h4>
+
+<div class="row">
+    {% if table.published %}
+        <span class="col-auto mx-2 badge rounded-pill bg-label-primary">Published</span>
+    {% else %}
+        <span class="col-auto mx-2 badge rounded-pill bg-label-danger">Draft</span>
+    {% endif %}
+
+    {% if table.readonly %}
+        <span class="col-auto mx-2 badge rounded-pill bg-label-secondary">Readonly</span>
+    {% endif %}
+</div>
+
+<div class="row mt-5">
+    {% if not table.readonly %}
+        {% if "Write" in permissions_list or user.username ==  "admin" or user.first_name == "admin"%}
+        <div class="col-auto">
+            <a href="{% url "add_table_field" table.id %}" class="btn btn-primary">
+                <span class="tf-icons bx bx-list-plus"></span>&nbsp; Add Field
+            </a>
+        </div>
+            {% endif %}
+        <div class="col-auto">
+             {% if "Write" in permissions_list or user.username ==  "admin" or user.first_name == "admin"%}
+
+            <div class="btn-group">
+                <button class="btn btn-icon btn-secondary dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="tf-icons bx bxs-cog"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li>
+                        <button data-bs-toggle="modal" data-bs-target="#tableRelation" class="dropdown-item{% if table.relations and tables %} disabled"><i class='bx bx-check'></i> {% else %}">{% endif %}Table Relation</button>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                        <a href="{% url "enable_media_table" table.id %}" class="dropdown-item{% if table.has_media %} disabled"><i class='bx bx-check'></i> {% else %}">{% endif %}Enable Media Table</a>
+                    </li>
+                    <li>
+                        <a href="{% url "enable_post_table" table.id %}" class="dropdown-item{% if table.has_posts %} disabled"><i class='bx bx-check'></i> {% else %}">{% endif %}Enable Post Table</a>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a href="{% url "publish_table" table.id %}" class="dropdown-item">Publish Table</a></li>
+                    <li><a href="{% url "migrate_table" table.id %}" class="dropdown-item">Migrate Table</a></li>
+                    <li><a href="{% url "make_table_readonly" table.id %}" class="dropdown-item">Make Readonly</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#apiProperty">Api Property</button></li>
+                    <li><a class="dropdown-item" href="{% url "get_table_versions" table.id %}">Version History</a></li>
+                    <li><a class="dropdown-item" href="{% url "get_model_logs" table.id %}">Model Logs</a></li>
+                </ul>
+            </div>
+
+        {% endif %}
+            <div class="modal fade" id="apiProperty" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel1">API Property</h5>
+                        <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                        ></button>
+                    </div>
+                    <form method="POST">
+                        <div class="modal-body">
+                        {% csrf_token %}
+                        {% for ap_field in api_prop_form %}
+                        <div class="row">
+                            <div class="col-auto">
+                                <a href="{{ap_field.help_text}}" target="_blank">
+                                    <span class="tf-icons bx bx-link-external"></span>
+                                </a>
+                            </div>
+                            <div class="form-check form-switch mb-2 col">
+                                {{ap_field}}
+                                <label class="form-check-label">{{ap_field.label}}</label>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                Close
+                            </button>
+                            <button type="submit" name="form_request" value="api_property" class="btn btn-primary">Send</button>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="tableRelation" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel1">New Relation</h5>
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                    ></button>
+                    </div>
+                    <form method="POST">
+                    <div class="modal-body">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="relTableList" class="form-label">Related Table</label>
+                            <select class="form-select" id="relTableList" name="rel_table_list" aria-label="Table List">
+                                {% for tbl in tables %}
+                                    {% if table.table_name != tbl.table_name %}
+                                        <option value="{{tbl.table_name}}">{{tbl.table_name_public}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                Close
+                            </button>
+                            <button type="submit" name="form_request" value="table_relation" class="btn btn-primary">Send</button>
+                        </div>
+                    </form>
+                </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% if table.document_url %}
+        <div class="col-auto">
+
+            <a href="{{table.document_url}}" class="btn btn-icon btn-info" target="_blank">
+                <i class='bx bxs-file-doc'></i>
+            </a>
+        </div>
+    {% endif %}
+</div>
+
+<div class="card mt-4">
+    <div class="table-responsive text-nowrap mt-2">
+        <table class="table py-3" id="example">
+            <thead>
+                <tr>
+                    <th>Field Name</th>
+                    <th>Description</th>
+                    <th>Field Data Type</th>
+                    <th>Related To Table</th>
+                    <th>Published</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+                {% for field in table.fields %}
+                    {% if not field.archived %}
+                        <tr>
+                            <td>{{field.field_name}}</td>
+                            <td>{{field.field_name_public}}</td>
+                            <td>{{field.field_data_type | title}}</td>
+                            <td>{{field.related_to}}</td>
+                            <td>{{field.published}}</td>
+                            <td>
+                            {% if "Write" in permissions_list or user.username ==  "admin" or user.first_name == "admin"%}
+                                {% if not table.readonly %}
+                                    {% if field.field_data_type != "foreign_key" %}
+                                        <a href="{% url "edit_table_field" table_id=table.id field_id=field.id %}" class="btn btn-sm btn-icon btn-primary">
+                                            <span class="tf-icons bx bxs-pencil"></span>
+                                        </a>
+                                    {% endif %}
+                                    {% if field.field_data_type in field_property_list %}
+                                        <a href="{% url "add_table_field_property" table_id=table.id field_id=field.id %}" class="btn btn-sm btn-icon btn-secondary">
+                                            <span class="tf-icons bx bxs-cog"></span>
+                                        </a>
+                                    {% elif field.field_data_type in basic_property_list %}
+                                        <a href="{% url "set_basic_field_property" id=field.id %}" class="btn btn-sm btn-icon btn-secondary">
+                                            <span class="tf-icons bx bxs-cog"></span>
+                                        </a>
+                                    {% elif field.field_data_type in select_fields %}
+                                        <button type="button" data-bs-toggle="dropdown" aria-expanded="false" class="btn btn-secondary btn-icon btn-sm">
+                                            <span class="tf-icons bx bxs-cog"></span>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-end">
+                                            <li><a href="{% url 'other_fields_property' field.id %}" class="dropdown-item">Basic Property</a></li>
+                                            <li><a href="{% url "select_field_property" id=field.id %}" class="dropdown-item">Add Choices</a></li>
+                                        </ul>
+                                    {% elif field.field_data_type == 'grid' %}
+                                        <button type="button" data-bs-toggle="dropdown" aria-expanded="false" class="btn btn-secondary btn-icon btn-sm">
+                                            <span class="tf-icons bx bxs-cog"></span>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-end">
+                                            <li><a href="{% url 'other_fields_property' field.id %}" class="dropdown-item">Basic Property</a></li>
+                                            <li><a href="{% url "grid_field_property" id=field.id %}" class="dropdown-item">Add Columns</a></li>
+                                        </ul>
+                                    {% elif field.field_data_type != 'foreign_key' %}
+                                        <a href="{% url "other_fields_property" id=field.id %}" class="btn btn-sm btn-icon btn-secondary">
+                                            <span class="tf-icons bx bxs-cog"></span>
+                                        </a>
+                                    {% endif %}
+                                    {% if not field.published %}
+                                        <button class="btn btn-sm btn-icon btn-danger" data-bs-toggle="modal" data-bs-target="#deleteField-{{field.id}}">
+                                            <span class="tf-icons bx bxs-trash"></span>
+                                        </button>
+                                        <div class="modal fade" id="deleteField-{{field.id}}" tabindex="-1" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel1">Delete</h5>
+                                                        <button
+                                                        type="button"
+                                                        class="btn-close"
+                                                        data-bs-dismiss="modal"
+                                                        aria-label="Close"
+                                                        ></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        {% csrf_token %}
+                                                        <p>Are you sure you want to delete field <b>{{field.field_name}}?</b></p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                                            Close
+                                                        </button>
+                                                        <a href="{% url "delete_table_field" table_id=table.id field_id=field.id %}" class="btn btn-danger">Delete</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                {% endif %}
+                              {% endif %}
+                            </td>
+
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock content %}

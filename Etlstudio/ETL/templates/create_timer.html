@@ -1,0 +1,92 @@
+{% extends 'etlbase.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="row">
+    <!-- Basic Layout -->
+    <div class="col-xxl">
+        <div class="card mb-4">
+            <div class="card-header d-flex align-items-center justify-content-between">
+                <h5 class="mb-0">{{title}}</h5>
+                <small class="text-muted float-end">Nanoxlabss</small>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token%}
+                    {{form | crispy}}
+                    <input type="submit" class="btn btn-primary" value="Save">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<h5 class="fw-bold py-3 mb-1 mt-4">Global Servies</h5>
+<div class="col-auto mb-1">
+    <a href="{% url 'start_scheduler' %}" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalLong">
+        <span class='tf-icons bx bx-play-circle'></span>Start Services
+    </a>
+    <a href="{% url 'stop_scheduler' %}" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalstop">
+        <span class='tf-icons bx bx bx-stop-circle'></span>Stop Services
+    </a>
+</div>
+
+<div class="modal fade" id="modalLong" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLongTitle">Start Global Run</h5>
+                <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                ></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    Auto Run will stop all micro-services and start global service by priority.<br>
+                    You can stop the service by Stop Auto Run. <br>
+                    Do wish to continue
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                    Cancel
+                </button>
+                <a href="{% url 'start_scheduler' %}" type="button" class="btn btn-primary">Run </a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalstop" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalstopTitle">Stop Global Run</h5>
+                <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                ></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    Stoping Global auto run will stop the combined and organised data transferring process.<br>
+                    You can start the service by Start Auto Run. <br>
+                    Do wish to continue
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                    Cancel
+                </button>
+                <a href="{% url 'stop_scheduler' %}" type="button" class="btn btn-primary">Stop </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+

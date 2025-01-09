@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h4 class="fw-bold py-3 mb-4">Export List</h4>
+
+    <div class="card mt-4">
+        <div class="table-responsive text-nowrap mt-2">
+            <table class="table" id="example">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody class="table-border-bottom-0">
+                <tr>
+                    <td>Connections</td>
+                    <td>
+                        <a href="#" class="btn btn-primary btn-sm">Select</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Schemas</td>
+                    <td>
+                        <a href="#" class="btn btn-primary btn-sm">Select</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Models</td>
+                    <td>
+                        <a class="btn btn-sm btn-primary" href="{% url 'model_export_list' %}">
+                            Select
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Data Tables</td>
+                    <td>
+                        <a href="#" class="btn btn-primary btn-sm">Select</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Dashboard</td>
+                    <td>
+                        <a href="#" class="btn btn-primary btn-sm">Select</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>SQL Views</td>
+                    <td>
+                        <a href="#" class="btn btn-primary btn-sm">Select</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Authentication</td>
+                    <td>
+                        <a href="#" class="btn btn-primary btn-sm">Select</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Custom API</td>
+                    <td>
+                        <a href="{% url 'custom_api_export_list' %}" class="btn btn-primary btn-sm">Select</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Core API</td>
+                    <td>
+                        <a href="#" class="btn btn-primary btn-sm">Select</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Flow</td>
+                    <td>
+                        <a href="#" class="btn btn-primary btn-sm">Select</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>CMS Page</td>
+                    <td>
+                        <a href="#" class="btn btn-primary btn-sm">Select</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Scheduled Jobs</td>
+                    <td>
+                        <a href="#" class="btn btn-primary btn-sm">Select</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock content %}

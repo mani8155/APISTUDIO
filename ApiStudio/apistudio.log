@@ -1,0 +1,341 @@
+Watching for file changes with StatReloader
+[30/Jul/2024 11:23:49] "GET / HTTP/1.1" 200 5688
+[30/Jul/2024 11:23:49] "GET /static/assets/vendor/fonts/boxicons.css HTTP/1.1" 200 86510
+[30/Jul/2024 11:23:49] "GET /static/assets/vendor/js/helpers.js HTTP/1.1" 200 103179
+[30/Jul/2024 11:23:50] "GET /static/assets/js/config.js HTTP/1.1" 200 741
+[30/Jul/2024 11:23:50] "GET /static/assets/css/demo.css HTTP/1.1" 200 2650
+[30/Jul/2024 11:23:50] "GET /static/assets/vendor/libs/jquery/jquery.js HTTP/1.1" 200 833085
+[30/Jul/2024 11:23:50] "GET /static/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css HTTP/1.1" 200 5219
+[30/Jul/2024 11:23:50] "GET /static/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js HTTP/1.1" 200 108858
+[30/Jul/2024 11:23:50] "GET /static/assets/vendor/js/bootstrap.js HTTP/1.1" 200 843148
+[30/Jul/2024 11:23:50] "GET /static/assets/vendor/css/core.css HTTP/1.1" 200 998344
+[30/Jul/2024 11:23:50] "GET /static/assets/vendor/libs/popper/popper.js HTTP/1.1" 200 57859
+[30/Jul/2024 11:23:50] "GET /static/assets/vendor/css/pages/page-auth.css HTTP/1.1" 200 36208
+[30/Jul/2024 11:23:50] "GET /static/assets/vendor/css/theme-default.css HTTP/1.1" 200 71446
+[30/Jul/2024 11:23:50] "GET /static/assets/vendor/js/menu.js HTTP/1.1" 200 80283
+[30/Jul/2024 11:23:50] "GET /static/assets/js/main.js HTTP/1.1" 200 3964
+[30/Jul/2024 11:23:50] "GET /static/assets/vendor/fonts/boxicons/boxicons.woff2 HTTP/1.1" 200 102988
+Not Found: /favicon.ico
+[30/Jul/2024 11:23:50] "GET /favicon.ico HTTP/1.1" 404 26684
+[30/Jul/2024 11:24:03] "POST / HTTP/1.1" 302 0
+Internal Server Error: /model_list/
+Traceback (most recent call last):
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\urllib3\connection.py", line 198, in _new_conn
+    sock = connection.create_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\urllib3\util\connection.py", line 85, in create_connection
+    raise err
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\urllib3\util\connection.py", line 73, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\urllib3\connectionpool.py", line 793, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\urllib3\connectionpool.py", line 496, in _make_request
+    conn.request(
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\urllib3\connection.py", line 400, in request
+    self.endheaders()
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\http\client.py", line 1298, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\http\client.py", line 1058, in _send_output
+    self.send(msg)
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\http\client.py", line 996, in send
+    self.connect()
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\urllib3\connection.py", line 238, in connect
+    self.sock = self._new_conn()
+                ^^^^^^^^^^^^^^^^
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\urllib3\connection.py", line 213, in _new_conn
+    raise NewConnectionError(
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x000001F3CCB58D50>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\requests\adapters.py", line 589, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\urllib3\connectionpool.py", line 847, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\urllib3\util\retry.py", line 515, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /crudapp/tables/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F3CCB58D50>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\api_models\views.py", line 32, in homepage
+    response = rq.get(f"{CRUD_API_URL}tables/")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\requests\api.py", line 73, in get
+    return request("get", url, params=params, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\requests\api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\requests\sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\requests\sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\requests\adapters.py", line 622, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /crudapp/tables/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F3CCB58D50>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+[30/Jul/2024 11:24:05] "GET /model_list/ HTTP/1.1" 500 176091
+Internal Server Error: /model_list/
+Traceback (most recent call last):
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\urllib3\connection.py", line 198, in _new_conn
+    sock = connection.create_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\urllib3\util\connection.py", line 85, in create_connection
+    raise err
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\urllib3\util\connection.py", line 73, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\urllib3\connectionpool.py", line 793, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\urllib3\connectionpool.py", line 496, in _make_request
+    conn.request(
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\urllib3\connection.py", line 400, in request
+    self.endheaders()
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\http\client.py", line 1298, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\http\client.py", line 1058, in _send_output
+    self.send(msg)
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\http\client.py", line 996, in send
+    self.connect()
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\urllib3\connection.py", line 238, in connect
+    self.sock = self._new_conn()
+                ^^^^^^^^^^^^^^^^
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\urllib3\connection.py", line 213, in _new_conn
+    raise NewConnectionError(
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x000001F3CCBAF250>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\requests\adapters.py", line 589, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\urllib3\connectionpool.py", line 847, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\urllib3\util\retry.py", line 515, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /crudapp/tables/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F3CCBAF250>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\api_models\views.py", line 32, in homepage
+    response = rq.get(f"{CRUD_API_URL}tables/")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\requests\api.py", line 73, in get
+    return request("get", url, params=params, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\requests\api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\requests\sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\requests\sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\requests\adapters.py", line 622, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /crudapp/tables/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F3CCBAF250>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+[30/Jul/2024 11:25:00] "GET /model_list/ HTTP/1.1" 500 175940
+Not Found: /favicon.ico
+[30/Jul/2024 11:25:00,724] - Broken pipe from ('127.0.0.1', 50789)
+Internal Server Error: /model_list/
+Traceback (most recent call last):
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\urllib3\connection.py", line 198, in _new_conn
+    sock = connection.create_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\urllib3\util\connection.py", line 85, in create_connection
+    raise err
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\urllib3\util\connection.py", line 73, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\urllib3\connectionpool.py", line 793, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\urllib3\connectionpool.py", line 496, in _make_request
+    conn.request(
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\urllib3\connection.py", line 400, in request
+    self.endheaders()
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\http\client.py", line 1298, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\http\client.py", line 1058, in _send_output
+    self.send(msg)
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\http\client.py", line 996, in send
+    self.connect()
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\urllib3\connection.py", line 238, in connect
+    self.sock = self._new_conn()
+                ^^^^^^^^^^^^^^^^
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\urllib3\connection.py", line 213, in _new_conn
+    raise NewConnectionError(
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x000001F3CCAA1910>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\requests\adapters.py", line 589, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\urllib3\connectionpool.py", line 847, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\urllib3\util\retry.py", line 515, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /crudapp/tables/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F3CCAA1910>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\api_models\views.py", line 32, in homepage
+    response = rq.get(f"{CRUD_API_URL}tables/")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\requests\api.py", line 73, in get
+    return request("get", url, params=params, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\requests\api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\requests\sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\requests\sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\requests\adapters.py", line 622, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /crudapp/tables/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F3CCAA1910>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+[30/Jul/2024 11:25:05] "GET /model_list/ HTTP/1.1" 500 175940
+[30/Jul/2024 11:25:29] "GET / HTTP/1.1" 200 5688
+[30/Jul/2024 11:25:38] "POST / HTTP/1.1" 302 0
+Internal Server Error: /model_list/
+Traceback (most recent call last):
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\urllib3\connection.py", line 198, in _new_conn
+    sock = connection.create_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\urllib3\util\connection.py", line 85, in create_connection
+    raise err
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\urllib3\util\connection.py", line 73, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\urllib3\connectionpool.py", line 793, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\urllib3\connectionpool.py", line 496, in _make_request
+    conn.request(
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\urllib3\connection.py", line 400, in request
+    self.endheaders()
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\http\client.py", line 1298, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\http\client.py", line 1058, in _send_output
+    self.send(msg)
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\http\client.py", line 996, in send
+    self.connect()
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\urllib3\connection.py", line 238, in connect
+    self.sock = self._new_conn()
+                ^^^^^^^^^^^^^^^^
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\urllib3\connection.py", line 213, in _new_conn
+    raise NewConnectionError(
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x000001F3CCD3C850>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\requests\adapters.py", line 589, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\urllib3\connectionpool.py", line 847, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\urllib3\util\retry.py", line 515, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /crudapp/tables/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F3CCD3C850>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\api_models\views.py", line 32, in homepage
+    response = rq.get(f"{CRUD_API_URL}tables/")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\requests\api.py", line 73, in get
+    return request("get", url, params=params, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\requests\api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\requests\sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\requests\sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\B2E_DjanoProjects\API_STUDIO\ApiStudio\venv\Lib\site-packages\requests\adapters.py", line 622, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /crudapp/tables/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F3CCD3C850>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+[30/Jul/2024 11:25:41] "GET /model_list/ HTTP/1.1" 500 176091
+[30/Jul/2024 11:25:48] "GET /model_list/ HTTP/1.1" 200 303968
+[30/Jul/2024 11:25:48] "GET /static/assets/vendor/libs/apex-charts/apex-charts.css HTTP/1.1" 200 18368
+[30/Jul/2024 11:25:48] "GET /static/assets/vendor/libs/apex-charts/apexcharts.js HTTP/1.1" 200 1251293
+[30/Jul/2024 11:25:48] "GET /static/assets/js/ui-toasts.js HTTP/1.1" 200 1344
+[30/Jul/2024 11:25:48] "GET /static/assets/img/avatars/profile-user.png HTTP/1.1" 200 7870
+[30/Jul/2024 11:25:48] "GET /static/assets/js/dashboards-analytics.js HTTP/1.1" 200 15694
+[30/Jul/2024 11:25:49] "GET /static/assets/img/favicon/nanox.png HTTP/1.1" 200 8453
+[30/Jul/2024 11:26:16] "GET /schemas/ HTTP/1.1" 200 16385
+[30/Jul/2024 11:26:18] "GET /schemas/1/ HTTP/1.1" 200 13639
+[30/Jul/2024 11:26:20] "GET /table_list/1/public/ HTTP/1.1" 200 51295
+[30/Jul/2024 11:26:23] "GET /get_records/1/public/alembic_version/ HTTP/1.1" 200 12819
+[30/Jul/2024 11:27:04] "GET /model_list/ HTTP/1.1" 200 303968
+^C

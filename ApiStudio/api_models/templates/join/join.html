@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block custom_menus %}
+    {% include "user_menus.html" %}
+{% endblock custom_menus %}
+{% load custom_tags %}
+{% block content %}
+
+<h4 class="fw-bold py-3 mb-4"> Model / {{ uid }}</h4>
+
+    <div class="card">
+      <h5 class="card-header">Turn on Read Permission</h5>
+      <div class="card-body">
+        <div class="alert alert-primary" role="alert">
+          Are You a member of the model ?
+
+        </div>
+
+          <a href="#" class="btn btn btn-info">Clik here</a>
+
+
+    </div>
+
+    </div>
+
+{% endblock content %}

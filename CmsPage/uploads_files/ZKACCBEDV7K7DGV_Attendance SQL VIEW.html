@@ -1,0 +1,49 @@
+<p><strong>SQL VIEW &ndash; Help Document.</strong></p>
+<p><strong>How to Use the SQL Views</strong></p>
+<p><strong>New SQL</strong></p>
+<ul>
+<li>New SQL &ndash; Create a New SQL View,
+<ul>
+<li>UID is the unique Id of SQL View UID is the Enterable Text,</li>
+<li>API name should be name of the SQL view. API name should not be allowed in the special character</li>
+<li>API and API method always standard format of REST And POST.</li>
+</ul>
+</li>
+<li>Db Connection: Db connections name should be selected which we have mentioned in DB Connections</li>
+<li>Schema - Based on the Db connection permitted schema name should be showed.</li>
+<li>URL &ndash; Content Management System (CMS) URL should be mentioned</li>
+<li>SQL &ndash; SQL Queries should be entered, SQL can get much more complex depending on the requirements of your database Tables.</li>
+<li>Save &ndash; Save the entries</li>
+<li>SQL Views &ndash; Saved SQL Views are showed in the format of API Name, API Method, UID, SQL Method is having two methods like SQL or Group, Action</li>
+<li>Action
+<ul>
+<li>1 Edit &ndash; Edit Should be modify the SQL only</li>
+<li>2 API End Point
+<ul>
+<li>2.1 Body Params &ndash; SQL is having any parameters it should be display, mention the data type in Body params.</li>
+<li>2.2 API Docs &ndash; This is the combination of API URL and Body params you can utilize the API for Front end developer</li>
+</ul>
+</li>
+<li>3 RUN SQL &ndash; Run SQL is the result set of the SQL in Column and Row format.</li>
+</ul>
+</li>
+<li><strong>Group SQL- </strong>Group SQL is the combination of SQL, Each SQL is having own parameters which that parameters are associate the Group body params. Each SQL result set one below one will display in Rest method</li>
+<li><strong>New Group SQL - </strong>Similar as the SQL it has unique Id; Group API name should be enterable and not allowed the special character. Db Connection and schema name will be displayed in the API Studio connections, Schema option, URL is the CMS page URL will be entered here</li>
+<li><strong>Select SQL &ndash;</strong> Multiple SQL you can Select depending on the Schema.</li>
+</ul>
+<p><strong>Attendance - API</strong></p>
+<p><strong>Scenario:&nbsp; </strong>Biometric attendance systems utilize unique biological characteristics such as fingerprints, Biometric data is unique to each individual data punch captured in Local Server which this data manually restores in the Server (API Studio Attendance Database) in Public Schema. The data collection should be converted into readable format using API Studio SQL View.</p>
+<p><strong>Why Attendance API: </strong>Biometric system not able to give the Breaking Time report, So We tried in the SQL View Attendance API. SQL View is having a Two Tables are Employee master and Iclock Transaction Table. Iclock transaction is every day biometric punching data, employee master is the details of the employee.</p>
+<p><strong>SQL Columns</strong> - Employee Code, First Name (Employee Name), Punch Date, Punch Time, Sl. No, Attendance Status.</p>
+<p><strong>Sl. No &amp; Attendance Status</strong></p>
+<p>0 is the <strong>Absent</strong> how to identify the absent an employee does not punch in via a biometric attendance system</p>
+<p>1 is the <strong>Check in</strong> of Attendance Status how to identify this status an employee punch in between 06:00 am to 10:30 am in case of multiple punch is available Minimum time will be taken.</p>
+<p>1.1 is <strong>Half an Hour Late </strong>employee punching time in between 10:31 am to 12:59, In case of multiple punch is available maximum time will be taken</p>
+<p>2 is the <strong>Lunch Breaking Log Out </strong>employee punching time in between 01:00 to 01:30 In case of multiple punch is available maximum time will be taken</p>
+<p>3 is the <strong>Lunch Breaking Log In</strong> employee punching time in between 01:31 to 02:00 In case of multiple punch is available maximum time will be taken</p>
+<p>3.1 is the <strong>Lunch Breaking Log in Late</strong> employee punching time in between 02:01 to 03:00 In case of multiple punch is available maximum time will be taken</p>
+<p>3.2 is <strong>Half Day Leave </strong>last punch is the in between 02:01 to 02:30 and not a checkout in between 06:00 to 10:00pm, it should not be lunch breaking log in late</p>
+<p>4 is the <strong>Checkout </strong>employee punching time in between 06:00 to 10:00 pm In case of multiple punch is available maximum time will be taken</p>
+<p>4.1 is the <strong>Early Checkout&nbsp; </strong>&nbsp;employee punching time in between 03:01 to 05:59 pm In case of multiple punch is available maximum time will be taken</p>
+<p><strong>Output</strong></p>
+<p>In future This API should be configure in Help Desk Application one of the Attendance Screen. &nbsp;This Attendance Screen should be visible employee data in Date wise&nbsp; along with Attendance Status. Each Day we need a Four punch. If the date is fall in Sunday or public holiday need to show report. Each employee attendance screen shows his/her data only. Admin rights person can see the all the employee data. Attendance summary report has to create, attendance Detail report has to create using this API.</p>

@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block custom_menus %}
+  {% include "user_menus.html" %}
+{% endblock custom_menus %}
+{% load base_temp_tags %}
+{% block content %}
+{% load schema_temp_tags %}
+
+
+
+<h4 class="fw-bold mb-3 mt-2">SQl Views / {{api_name}} </h4>
+
+<div class="col-xl-6 py-1">
+    <h6 class="text-muted"></h6>
+    <div class="nav-align-top mb-4">
+      <ul class="nav nav-pills mb-3" role="tablist">
+
+        {% comment %} {% for groupname in api_header %}
+   
+        <li class="nav-item" role="presentation">
+          <button type="button" class="nav-link " role="tab" data-bs-toggle="tab" data-bs-target="#navs-{{groupname}}" aria-controls="navs-pills-top-home" aria-selected="true">{{groupname}}</button>
+        </li>
+       {% endfor %} {% endcomment %}
+
+       {% for groupname in api_header %}
+       {% if forloop.counter  == 1 %}
+        <li class="nav-item" role="presentation">
+            <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#navs-{{groupname}}" aria-controls="navs-pills-top-home" aria-selected="true" onclick="myFunction('{{groupname}}')">{{groupname}}</button>
+        </li>
+    {% else %}
+        <li class="nav-item" role="presentation">
+            <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-{{groupname}}" aria-controls="navs-pills-top-home" aria-selected="true" onclick="myFunction('{{groupname}}')">{{groupname}}</button>
+        </li>
+    {% endif %}
+   {% endfor %}
+   
+
+      </ul>
+
+    </div>
+  </div>
+
+
+<div class="card mt-4">
+    <div class="table-responsive text-nowrap mt-3">
+        <table class="table" id="example" >
+            <thead>
+                {% for col in columns %}
+                    <th>{{col}}</th>
+                    {% endfor %}
+            </thead>
+            <tbody class="table-border-bottom-0">
+                {% for res_data in defalut_first_data %}
+                <tr>
+                    {% for col in columns %}
+                          <td>{{ res_data|getattribute:col }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<script>
+
+    function myFunction(groupname){
+        alert({{id_data}});
+        let id_value = {{id_data}}
+        $.ajax({
+            type: 'GET',
+            url: '{% url 'jquery_run_group' %}',
+            data: {'id': id_value, 'groupname': groupname},
+            success: function (data) {
+                console.log(data);
+
+                const tableHeader = $('thead');
+                tableHeader.empty();
+                data.columns.forEach(col => {
+                    tableHeader.append(`<th>${col}</th>`);
+                });
+
+                // Update table body
+                const tableBody = $('tbody');
+                tableBody.empty();
+                data.defalut_first_data.forEach(item => {
+                    let row = '<tr>';
+                    data.columns.forEach(col => {
+                        row += `<td>${item[col]}</td>`;
+                    });
+                    row += '</tr>';
+                    tableBody.append(row);
+                });
+                
+            },
+            error: function (xhr, status, error) {
+                console.error('AJAX request failed:', status, error);
+            }
+        });
+        
+    }
+</script>
+
+
+{% endblock content %}

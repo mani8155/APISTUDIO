@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+{% block custom_menus %}
+  {% include "user_menus.html" %}
+{% endblock custom_menus %}
+{% block content %}
+{% load base_temp_tags %}
+<h4 class="fw-bold py-3 mb-2">Sql Views Revision List</h4>
+
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col">
+                <p>API Name: <strong>{{sql_views_parent.api_name}}</strong></p>
+                <p>UID: <strong>{{sql_views_parent.uid}}</strong></p>
+            </div>
+            <div class="col">
+                {% if sql_views_parent.api_header_property == '{"api_format": {"group": false}}' %}
+                <p>File Type:  <span class="badge rounded-pill bg-label-warning">Sql</span>
+                {% elif sql_views_parent.api_header_property == '{"api_format": {"group": true}}' %}
+                <p>File Type:  <span class="badge rounded-pill bg-label-danger">Group</span>
+                {%else%}
+                <p>File Type:  <span class="badge rounded-pill bg-label-secondary">None</span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="card mt-4">
+    <div class="table-responsive text-nowrap mt-2">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>UID</th>
+                    <th>Created On</th>
+                    <th>Updated On</th>
+
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+                {% for mig in migrations_list_data %}
+                    <tr>
+
+                    <td><button class="btn btn-dark btn-sm dropdown-toggle dropdown-toggle-split"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bx bx-cog"></i>
+                        </button>
+
+                        <ul class="dropdown-menu" style="">
+                            <li><a class="dropdown-item" href="{% url 'copy_sql' mig.id %}">Copy
+                                Form</a>
+                            </li>
+                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#apiRevert{{mig.id}}">Revert
+                                SQL</a>
+                            </li>
+                        </ul></td>
+
+                        <td>{{mig.uid}}</td>
+                        <td>{{mig.created_on}}</td>
+                        <td>{{mig.updated_on}}</td>
+
+                    </tr>
+
+
+                    <div class="modal fade" id="apiCopy{{mig.id}}" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel1">Copy</h5>
+                              <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                              ></button>
+                            </div>
+                            <form method="POST" action="">
+                               <div class="modal-body">
+                                {% csrf_token %}
+
+                                <div class="mb-3">
+                                    <label class="form-label">UID</label>
+                                    <input type="text" name="uid" class="form-control" required="" id="id_uid">
+                                </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                        Close
+                                    </button>
+                                    <button type="submit" name="form_request" value="api_copy" class="btn btn-primary">
+                                        Send
+                                    </button>
+                                </div>
+                            </form>
+                          </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="apiRevert{{mig.id}}" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel1">Revert</h5>
+                              <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                              ></button>
+                            </div>
+                            <form method="POST" action="">
+                               <div class="modal-body">
+                                {% csrf_token %}
+                                <p>Are you sure you want to revert api: <b>{{mig.uid}}</b>?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                        Close
+                                    </button>
+                                    <a href="{% url 'revert_sql' mig.id %}"  class="btn btn-primary">
+                                        Send
+                                    </a>
+                                </div>
+                            </form>
+                          </div>
+                        </div>
+                    </div>
+
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+{% endblock content %}

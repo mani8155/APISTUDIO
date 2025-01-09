@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block custom_menus %}
+    {% include "admin_menus.html" %}
+{% endblock custom_menus %}
+
+{% block content %}
+    <h4 class="fw-bold py-2 mb-2">Menu Privilege</h4>
+    <div class="demo-inline-spacing">
+        <a href="{% url 'add_menu_privilege' %}" class="btn btn-primary">
+            <span class="tf-icons bx bx-list-plus"></span>&nbsp; Add New
+        </a>
+    </div>
+    <div class="card mt-4">
+        <div class="table-responsive text-nowrap mt-2">
+            <table class="table" id="example">
+                <thead>
+                <tr>
+                    <th>menu privilege name</th>
+                    <th>menu privilege start date</th>
+                    <th>menu privilege end date</th>
+                    <th>active</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody class="table-border-bottom-0">
+                {% for menu in menu_privilege %}
+                    <tr>
+                        <td>{{ menu.menu_privilege_name }}</td>
+                        <td>{{ menu.menu_privilege_start_date }}</td>
+                        <td>{{ menu.menu_privilege_end_date }}</td>
+                        <td>{{ menu.active }}</td>
+                        <td>
+                            <a href="{% url 'edit_menu_privilege' menu.psk_id %}"
+                               class="btn btn-sm btn-icon btn-primary">
+                                <i class="bx bxs-edit"></i>
+                            </a>
+                             <a class="btn btn-icon btn-sm btn-danger" href="#" data-bs-toggle="modal" data-bs-target="#modalToggle{{ menu.psk_id }}">
+                                <i class="bx bxs-trash"></i>
+                            </a>
+{#                            <a href = "{% url 'delete_menu_privilege' menu.psk_id %}"#}
+{#                               class="btn btn-danger btn-icon btn-sm">#}
+{#                                <i class="bx bxs-trash"></i>#}
+{#                            </a>#}
+                        </td>
+                    </tr>
+                    <div class="modal fade" id="modalToggle{{menu.psk_id}}" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="modalToggleLabel">Delete</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                       Do you want to delete the menu privilege?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                            No
+                                        </button>
+                                        <a href="{% url 'delete_menu_privilege' menu.psk_id %}" class="btn btn-danger">Yes</a>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock content %}

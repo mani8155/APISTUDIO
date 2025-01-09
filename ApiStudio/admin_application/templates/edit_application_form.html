@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block custom_menus %}
+    {% include "admin_menus.html" %}
+{% endblock custom_menus %}
+
+{% block content %}
+    <h4 class="fw-bold py-3 mb-4">Edit Application<span class="text-muted fw-light"> / {{ app_group.group_id }}</span></h4>
+    <div class="card mb-4">
+        <div class="card-body">
+            <form method="POST">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="mb-3">
+                        <label for="id_field" class="form-label">{{ field.label }}</label>
+
+                        {{ field }}
+                    </div>
+                {% endfor %}
+                   
+                <button type="submit" class="btn btn-primary">Send</button>
+            </form>
+        </div>
+    </div>
+{% endblock content %}
+

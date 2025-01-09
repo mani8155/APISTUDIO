@@ -1,0 +1,198 @@
+{% extends "base.html" %}
+{% block custom_menus %}
+    {% include "user_menus.html" %}
+{% endblock custom_menus %}
+{% block content %}
+    <h4 class="fw-bold py-3 mb-4">Tables</h4>
+
+    <div class="row mt-4">
+        <div class="col-auto">
+            <a href="{% url "get_model_uids" %}" class="btn btn-primary">
+                <span class="tf-icons bx bx-list-plus"></span>&nbsp; Add New
+            </a>
+        </div>
+    </div>
+
+    <div class="card mt-4">
+        <div class="table-responsive text-nowrap mt-2">
+            <table class="table py-3" id="example">
+                <thead>
+                <tr>
+                    <th>Table Name</th>
+                    <th>Description</th>
+                    <th>UID</th>
+                    <th>DB Connection</th>
+                    <th>Published</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody class="table-border-bottom-0">
+                {% for table in tables %}
+                    <tr>
+                        <td>{{ table.table_name }}</td>
+                        <td>{{ table.table_name_public }}</td>
+                        <td>{{ table.uid }}</td>
+                        <td>{{ table.db_connection_name }}</td>
+                        <td>{{ table.published }}</td>
+                        <td>
+                            <button class="btn btn-icon btn-sm btn-dark" data-bs-toggle="modal"
+                                    data-bs-target="#table-settings-{{ table.id }}">
+                                <i class='bx bx-cog'></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <div class="modal fade" id="table-settings-{{ table.id }}" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel1">{{ table.table_name }}</h5>
+                                    <button
+                                            type="button"
+                                            class="btn-close"
+                                            data-bs-dismiss="modal"
+                                            aria-label="Close"
+                                    ></button>
+                                </div>
+
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <a class="dropdown-item" href="{% url "view_table" table.id %}">
+                                                <span class="tf-icons bx bx-table"></span> View Table
+                                            </a>
+                                        </div>
+
+                                    <div class="col-sm-6">
+                                            <a class="dropdown-item" href="{% url 'clone_model_uids' table.id %}">
+                                                <span class="tf-icons bx bxs-duplicate"></span> Clone
+                                            </a>
+                                        </div>
+                                        {% if table.db_connection %}
+                                            <div class="col-sm-6">
+                                                <a href="{% url 'get_records' table.db_connection 'public' table.table_name %}"
+                                                   class="dropdown-item" target="_blank">
+                                                    <i class='bx bx-file'></i> View Table Data
+                                                </a>
+                                            </div>
+                                        {% endif %}
+                                        {% if not table.readonly %}
+                                            <div class="col-sm-6">
+                                                <a href="{% url "edit_table" table.id %}" class="dropdown-item">
+                                                    <span class="tf-icons bx bxs-pencil"></span> Edit Table
+                                                </a>
+                                            </div>
+                                            {% if not table.published %}
+                                                <div class="col-sm-6">
+                                                    <button class="dropdown-item" data-bs-toggle="modal"
+                                                            data-bs-target="#deleteTable-{{ table.id }}">
+                                                        <span class="tf-icons bx bxs-trash"></span> Delete
+                                                    </button>
+                                                </div>
+                                            {% endif %}
+                                        {% else %}
+                                            <div class="col-sm-6">
+                                                <a href="{% url 'remove_table_readonly' table.id %}"
+                                                   class="dropdown-item">
+                                                    <i class="bx bx-low-vision"></i> Remove Readonly
+                                                </a>
+                                            </div>
+                                        {% endif %}
+                                        {% if table.document_url %}
+                                            <div class="col-sm-6">
+                                                <a href="{{ table.document_url }}" class="dropdown-item"
+                                                   target="_blank">
+                                                    <i class='bx bxs-file-doc'></i> Document
+                                                </a>
+                                            </div>
+                                        {% endif %}
+                                        {% if table.published %}
+                                            <div class="col-sm-6">
+                                                <div class="btn-group">
+                                                    <button class="dropdown-item dropdown-toggle"
+                                                            data-bs-toggle="dropdown"
+                                                            href="" aria-expanded="false">
+                                                        <i class="bx bx-export me-1"></i> Export
+                                                    </button>
+
+                                                    <ul class="dropdown-menu" style="">
+                                                        <li><a class="dropdown-item"
+                                                               href="{{ API_URL }}crudapp/export-model-template/{{ table.id }}">
+                                                            Export Template</a></li>
+                                                        <li><a class="dropdown-item"
+                                                               href="{{ API_URL }}crudapp/export-model-data/{{ table.id }}">
+                                                            Export Data</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="btn-group">
+                                                    <button class="dropdown-item dropdown-toggle"
+                                                            data-bs-toggle="dropdown"
+                                                            href="" aria-expanded="false">
+                                                        <i class="bx bx-import me-1"></i> Import
+                                                    </button>
+
+                                                    <ul class="dropdown-menu" style="">
+                                                        <li>
+                                                            <a class="dropdown-item"
+                                                               href="{% url 'import_excel_data' table.id %}"> Import from Excel
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item"
+                                                               href="{% url 'import_api_data' table.id %}"> Import from Api
+                                                            </a>
+                                                        </li>
+
+
+
+                                                    </ul>
+                                                </div>
+
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                    {% if not table.published %}
+                        <div class="modal fade" id="deleteTable-{{ table.id }}" tabindex="-1"
+                             aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel1">
+                                            Delete</h5>
+                                        <button
+                                                type="button"
+                                                class="btn-close"
+                                                data-bs-dismiss="modal"
+                                                aria-label="Close"
+                                        ></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Are you sure you want to delete table
+                                            <b>{{ table.table_name }}?</b></p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-outline-secondary"
+                                                data-bs-dismiss="modal">
+                                            Close
+                                        </button>
+                                        <a href="{% url "delete_table" table.id %}"
+                                           class="btn btn-danger">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock content %}

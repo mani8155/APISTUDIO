@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block custom_menus %}
+    {% include "admin_menus.html" %}
+{% endblock custom_menus %}
+
+{% block content %}
+    <h4 class="fw-bold py-3 mb-4">User Masters</h4>
+    <div class="demo-inline-spacing">
+        <a href="{% url 'add_user_master' %}" class="btn btn-primary">
+            <span class="tf-icons bx bx-list-plus"></span>&nbsp; Add User Masters
+        </a>
+    </div>
+    <div class="card mt-4">
+        <div class="table-responsive text-nowrap mt-2">
+            <table class="table" id="example">
+                <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>User Name</th>
+                    <th>User Type</th>
+                    <th>Email</th>
+                    <th>User Role</th>
+                    <th>Reporting To</th>
+
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody class="table-border-bottom-0">
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.first_name }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.user_type }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.user_roles }}</td>
+                        <td>{{ user.reporting_to }}</td>
+
+                        <td>
+                            <a href="{% url 'edit_user_master' user.psk_id %}"
+                               class="btn btn-primary btn-icon btn-sm">
+                                <i class="bx bxs-edit"></i>
+                            </a>
+                            <a href = "{% url 'delete_user' user.psk_id %}"
+                               class="btn btn-primary btn-icon btn-sm">
+                                <i class="bx bx-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock content %}

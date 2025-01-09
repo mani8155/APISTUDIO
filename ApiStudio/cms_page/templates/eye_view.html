@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block custom_menus %}
+  {% include "user_menus.html" %}
+{% endblock custom_menus %}
+{% load static %}
+{% load base_temp_tags %}
+
+{% block custom_style %}
+<link rel="stylesheet" href="{% static 'codemirror/codemirror.css' %}">
+<link rel="stylesheet" href="{% static 'codemirror/ayu-dark.css' %}">
+<script src="{% static 'codemirror/codemirror.js' %}"></script>
+<script src="{% static 'codemirror/python.js' %}"></script>
+<script src="{% static 'codemirror/matchbrackets.js' %}"></script>
+<style>
+    .CodeMirror {
+        border: 1px solid #eee;
+        height: auto;
+        font: 1em mono;
+    }
+</style>
+{% endblock custom_style %}
+
+{% block content %}
+<h4 class="fw-bold py-3">{{ cms_data.api_name }}</h4>
+<span class="mb-2 badge rounded-pill bg-{{cms_data.api_method|badge}}">{{cms_data.api_method}}</span>
+<textarea id="editor">{{file_text}}</textarea>
+{% endblock content %}
+
+{% block custom_scripts %}
+<script>
+    myTextarea = document.getElementById("editor");
+    var editor = CodeMirror.fromTextArea(myTextarea, {
+        lineNumbers: true,
+        indentUnit: 4,
+        theme: "ayu-dark",
+        matchBrackets: true,
+        readOnly: true
+    });
+</script>
+{% endblock custom_scripts %}

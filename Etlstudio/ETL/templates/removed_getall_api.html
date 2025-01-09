@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>getall_api</title>
+    <style>
+
+    table, th, td {
+    border: 1px solid black;
+    padding: 1px;
+    border-collapse: collapse;
+    }
+
+    .start {
+
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+    .stop {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+
+    .add {
+            position: absolute;
+            top: 0;
+            left: 50%;
+        }
+
+
+    </style>
+</head>
+<body>
+<div class="start">
+    <h2>
+        <button><a href="{% url 'start_scheduler' %}">Start Service</a></button>
+    </h2>
+</div>
+<div class='add'>
+    <h2>
+        <button><a href="{% url 'create_api' %}" style="text-decoration: none;">Add</a></button>
+    </h2>
+</div>
+<div class="stop">
+    <h2>
+        <button><a href="{% url 'stop_scheduler' %}">Stop Service</a></button>
+    </h2>
+</div>
+<table style="width:100%; padding-top:5px; margin-top:50px">
+    <thead>
+    <tr>
+        <th>Connection Name</th>
+        <th>API Name</th>
+<!--        <th>URL</th>-->
+<!--        <th>Method</th>-->
+        <th>Project Group</th>
+        <th>Priority</th>
+        <th>Start Task</th>
+        <th>End Task</th>
+        <th>Last Executed</th>
+        <th>Active</th>
+        <th>Edit</th>
+        <th>Run</th>
+        <th>Delete</th>
+    </tr>
+
+    {% for data in queryset %}
+    <tr>
+        <td>
+            {{data.connection_name}}
+        </td>
+        <td>
+            {{data.core_api}}
+        </td>
+<!--        <td>-->
+<!--            {{data.url}}-->
+<!--        </td>-->
+<!--        <td>-->
+<!--            {{data.method}}-->
+<!--        </td>-->
+        <td>
+            {{data.project_group}}
+        </td>
+        <td>
+            {{data.priority}}
+        </td>
+        <td>
+            {{data.start_task}}
+        </td>
+        <td>
+            {{data.end_task}}
+        </td>
+        <td>
+            {{data.last_executed}}
+        </td>
+        <td>
+            {{data.active}}
+        </td>
+        <td>
+            <button><a href="{% url 'update_api' data.id %}">Edit</a></button>
+        </td>
+        <td>
+            <button><a href="{% url 'runSingleService' data.id %}">Force Run</a></button>
+        </td>
+        <td>
+            <button><a href="{% url 'delete_api' data.id %}">Delete</a></button>
+        </td>
+        <td>
+            <button><a href="{% url 'testservice' data.id %}">Test</a></button>
+        </td>
+
+    </tr>
+    {% endfor %}
+    </thead>
+</table>
+
+
+
+
+</body>
+</html>

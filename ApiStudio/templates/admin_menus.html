@@ -1,0 +1,50 @@
+<ul class="menu-inner py-1">
+  <li class="menu-item" id="menu-app" value="adm1">
+    <a href="{% url 'get_application_groups' %}" class="menu-link">
+      <i class="menu-icon tf-icons bx bxs-package"></i>
+      <div data-i18n="Application">Application</div>
+    </a>
+  </li>
+  <li class="menu-item" id="menu-usermaster" value="adm2">
+    <a href="{% url 'user_master_screen' %}" class="menu-link">
+      <i class="menu-icon tf-icons bx bxs-user"></i>
+      <div data-i18n="User Masters">User Masters</div>
+    </a>
+  </li>
+  <li class="menu-item" id="menu-rolesmaster" value="adm3">
+    <a href="{% url 'role_master_screen' %}" class="menu-link">
+      <i class="menu-icon tf-icons bx bxs-user-badge"></i>
+      <div data-i18n="Roles Masters">Roles Masters</div>
+    </a>
+  </li>
+  <li class="menu-item" id="menu-userprivilege" value="adm4">
+    <a href="{% url 'user_privilege_screen' %}" class="menu-link">
+      <i class="menu-icon tf-icons bx bxs-user-detail"></i>
+      <div data-i18n="User Privilege">User Privilege</div>
+    </a>
+  </li>
+  <li class="menu-item" id="menu-menu-elements" value="adm5">
+    <a href="{% url 'menu_list' %}" class="menu-link">
+      <i class="menu-icon tf-icons bx bxs-food-menu"></i>
+      <div data-i18n="Menu Elements">Menu Elements</div>
+    </a>
+  </li>
+  <li class="menu-item" id="menu-menu-privilege" value="adm6">
+    <a href="{% url 'menu_privilege_list' %}" class="menu-link">
+      <i class="menu-icon tf-icons bx bxs-food-menu"></i>
+      <div data-i18n="Menu Privilege">Menu Privilege</div>
+    </a>
+  </li>
+  <li class="menu-item" id="menu-export" value="adm7">
+    <a href="/data-migs/" class="menu-link">
+      <i class="menu-icon tf-icons bx bx-export"></i>
+      <div data-i18n="Export">Export</div>
+    </a>
+  </li>
+  <li class="menu-item" id="menu-import" value="adm8">
+    <a href="/data-migs/import-list/" class="menu-link">
+      <i class="menu-icon tf-icons bx bx-import"></i>
+      <div data-i18n="Import">Import</div>
+    </a>
+  </li>
+</ul>

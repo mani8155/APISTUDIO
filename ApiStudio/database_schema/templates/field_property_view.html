@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block custom_menus %}
+  {% include "user_menus.html" %}
+{% endblock custom_menus %}
+{% block content %}
+
+
+<h4 class="pb-1 py-3 mb-4">{{ db_name }} / {{ schema_name }} / {{ table_name }} / {{ field_name }} / property  </h4>
+
+    <div class="card">
+        <div class="table-responsive">
+            <table class="table py-3">
+                <thead>
+                <tr>
+                    <th class="text-nowrap">Property</th>
+                    <th class="text-nowrap text-center">Status</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                <tr>
+                    <td class="text-nowrap text-heading">Nullable</td>
+                    <td>
+                        <div class="form-check mb-0 d-flex justify-content-center align-items-center">
+                            <input class="form-check-input" type="checkbox" id="defaultCheck3"
+                                   {% if obj.nullable %}checked{% endif %}>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="text-nowrap text-heading">Mandatory</td>
+                    <td>
+                        <div class="form-check mb-0 d-flex justify-content-center align-items-center">
+                            <input class="form-check-input" type="checkbox" id="defaultCheck3"
+                                   {% if obj.is_mandatory %}checked{% endif %}>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="text-nowrap text-heading">Primary Key</td>
+                    <td>
+                        <div class="form-check mb-0 d-flex justify-content-center align-items-center">
+                            <input class="form-check-input" type="checkbox" id="defaultCheck3"
+                                   {% if obj.primary_Key %}checked{% endif %}>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="text-nowrap text-heading">Unique Key</td>
+                    <td>
+                        <div class="form-check mb-0 d-flex justify-content-center align-items-center">
+                            <input class="form-check-input" type="checkbox" id="defaultCheck3"
+                                   {% if obj.unique_key %}checked{% endif %}>
+                        </div>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+{% endblock content %}

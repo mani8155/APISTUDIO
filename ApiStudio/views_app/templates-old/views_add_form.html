@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block custom_menus %}
+{% include "user_menus.html" %}
+{% endblock custom_menus %}
+{% load base_temp_tags %}
+{% block content %}
+
+<h4 class="fw-bold py-3 mb-4">Create New Views</h4>
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+            {% for field in form %}
+                <div class="mb-3 col-md-4">
+                    <label class="form-label" for="basic-default-fullname">{{ field.label }}</label>
+                    {{ field }}
+                </div>
+            {% endfor %}
+
+            <div class="mb-3 col-md-4" id="dbCol">
+                <label for="dbConnection" class="form-label">DB Connection</label>
+                <select class="form-select" id="dbConnection" name="db_connection" onchange="SeletctDB(this)">
+                    <option selected="" value="">---------</option>
+                    {% for db_eng in db_engines %}
+                        <option value="{{ db_eng.id }}"
+                                {% if db_eng.id == selected_db %}selected{% endif %}>{{ db_eng.db_connection }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-3 col-md-4" id="dbCol">
+                <label for="dbConnection" class="form-label">Schema</label>
+                  <select class="form-control" id="id_schema" name="schema">
+                    <option selected="" value="">---------</option>
+                </select>
+            </div>
+
+            <div class="mb-3" id="dbCol">
+                <label class="form-label">URL</label>
+                <input type="text" class="form-control" id="id_doc_url" name="doc_url">
+            </div>
+            
+
+            <div class="mb-3" id="dbCol">
+                <label for="dbConnection" class="form-label">Sql Query</label>
+                <textarea class="form-control" id="id_sql_query" name="sql_query" rows="10" cols="50"></textarea>
+            </div>
+
+
+    
+            <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+
+
+<script>
+
+function SeletctDB(element){
+let db = element.value
+console.log(db);
+
+$.ajax({
+    type: 'GET',
+    url: {% url 'get_db' %},
+    data: {'db':db},
+    success: function (data){
+
+        let SchemaValue = data['schema_list'];
+
+        schemaeData = SchemaValue;
+        let schema = document.getElementById('id_schema');
+        schema.innerHTML = "";
+        schema.innerHTML = `<option value="" selected="">---------</option>`;
+
+        for (let i = 0; i < schemaeData.length; i++) {
+            schema.innerHTML += `<option value="${schemaeData[i]}">${schemaeData[i]}</option>`;
+        }
+
+    }
+
+})
+
+}
+
+
+</script>
+
+{% endblock content %}
+
+

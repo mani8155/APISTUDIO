@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block custom_menus %}
+    {% include "admin_menus.html" %}
+{% endblock custom_menus %}
+
+{% block content %}
+<h4 class="fw-bold py-3 mb-4">Move to Group</h4>
+{% if create == 200 %}
+<div class="row">    
+    <div class="col">
+        <button type="button" class="btn btn-icon btn-success" data-bs-toggle="modal" data-bs-target="#searchModel">
+            <i class='bx bx-search-alt'></i>
+          </button>
+          <div class="modal fade" id="searchModel" tabindex="-1" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel1">Search</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form method="post">
+                    <div class="modal-body">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="id_field" class="form-label">Field</label>
+                            <select class="form-select" id="id_field" name="field" aria-label="Default select example">
+                              <option value="name">Name</option>
+                              <option value="group_id">Group Id</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_search" class="form-label">Search</label>
+                            <input id="id_search" class="form-control" type="text" name="search" placeholder="Search...">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                            Close
+                        </button>
+                        <button type="submit" class="btn btn-success">Search</button>
+                    </div>
+                </form>
+              </div>
+            </div>
+          </div>
+    </div>
+</div>
+{% else %}
+    <div class="alert alert-danger" role="alert">Table Not Found</div>
+{% endif %}
+
+<div class="card mt-4">
+    <div class="table-responsive text-nowrap mt-2">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Group Name</th>
+                    <th>Group ID</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for group in app_groups %}
+                <tr>
+                    <td>{{ group.name }}</td>
+                    <td>{{ group.group_id }}</td>
+                    <td>
+                        {% if group.psk_id == group_id %}
+                            <span class="badge rounded-pill bg-label-primary">Selected</span>
+                        {% else %}
+                            <a href="{% url "move_to_group" group_id app_id group.psk_id %}" class="btn btn-sm btn-icon btn-primary">
+                                <span class="tf-icons bx bx-list-check"></span>
+                            </a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}

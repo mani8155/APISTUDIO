@@ -1,0 +1,81 @@
+{% extends 'etlbase.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<h4 class="fw-bold py-3 mb-2"><span class="text-muted fw-light"></span> Connections</h4>
+<div class="col-auto mb-1">
+    <a href="{% url 'create_connection' %}" class="btn btn-primary">
+        <span class="tf-icons bx bx-list-plus"></span>&nbsp; Add New
+    </a>
+</div>
+<div class="card">
+    <h5 class="card-header">ETL connections</h5>
+    <div class=" text-nowrap">
+        <table class="table mb-5" id="example">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Engine</th>
+                <th>Port</th>
+                <th>Host</th>
+                <th>Database</th>
+                <th>User</th>
+                <th>Schema</th>
+                <th>Connection Name</th>
+                <th>Action</th>
+
+            </tr>
+            </thead>
+            <tbody class="table-border-bottom-5">
+
+            {% for obj in queryset %}
+
+            <tr class="odd">
+                <td>{{obj.id}}</td>
+                <td>{{obj.db_engine}}</td>
+                <td>{{obj.port}}</td>
+                <td>{{obj.host}}</td>
+                <td>{{obj.database}}</td>
+                <td>{{obj.user}}</td>
+                <td>{{obj.schema}}</td>
+                <td>{{obj.connection_name}}</td>
+                <td>
+                    <button class="btn btn-icon btn-sm btn-dark" data-bs-toggle="modal"
+                            data-bs-target="#modalupdate{{obj.id}}">
+                        <i class="bx bx-cog"></i>
+                    </button>
+                </td>
+            </tr>
+
+            <div class="modal fade" id="modalupdate{{obj.id}}" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalupdateTitle">Connection</h5>
+                            <button
+                                    type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                            ></button>
+                        </div>
+                        <div class="modal-body">
+                            <a class="dropdown-item" href="{% url 'update_connection' obj.id %}"><i
+                                    class="bx bx-edit-alt me-1"></i>Edit</a>
+                            <a class="dropdown-item" href="{% url 'create_transferlog_02' obj.id %}"><i
+                                    class="bx bx bxs-bolt"></i>Create Transferlog</a>
+                            <a class="dropdown-item" href="{% url 'delete_connection' obj.id %}"><i
+                                    class="bx bx-trash"></i>Delete</a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}
+

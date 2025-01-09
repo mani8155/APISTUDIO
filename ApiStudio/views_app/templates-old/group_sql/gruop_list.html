@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+{% block custom_menus %}
+  {% include "user_menus.html" %}
+{% endblock custom_menus %}
+{% load base_temp_tags %}
+{% block content %}
+
+
+
+<h4 class="fw-bold mb-3 mt-2">SQL Views / SQL Group</h4>
+{% comment %} 
+<div class="card-body">
+  <small class="text-light fw-medium">Default</small>
+  <div class="demo-inline-spacing">
+    <button type="button" class="btn btn-primary">Primary</button>
+    <button type="button" class="btn btn-secondary">Secondary</button>
+    <button type="button" class="btn btn-success">Success</button>
+    <button type="button" class="btn btn-danger">Danger</button>
+    <button type="button" class="btn btn-warning">Warning</button>
+    <button type="button" class="btn btn-info">Info</button>
+    <button type="button" class="btn btn-dark">Dark</button>
+  </div>
+</div> {% endcomment %}
+{% comment %} 
+<div class="demo-inline-spacing"> {% endcomment %}
+{% comment %} 
+  <a href={% url 'views_add_form' %} class="btn btn-primary">
+    <span class="tf-icons bx bx-list-plus"></span>&nbsp; New Sql
+  </a> {% endcomment %}
+  {% comment %} <a href="{% url 'group_form' %}" class="btn  btn-success">
+    <span class="tf-icons bx bxs-add-to-queue"></span>&nbsp; Group Sql
+  </a> {% endcomment %}
+
+
+{% comment %} 
+      <div class="btn-group" id="dropdown-icon-demo">
+        <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="bx bx-menu me-1"></i> Group Sql</button>
+        <ul class="dropdown-menu" style="">
+          <li><a class="dropdown-item" href="{% url 'group_form' %}">
+            <span class="tf-icons bx bxs-add-to-queue"></span>&nbsp; Add Group</a></li>
+          <li><a class="dropdown-item" href="javascript:void(0);">
+            <i class='bx bx-food-menu'></i>&nbsp; Group List</a></li>
+         
+        </ul>
+      </div>
+
+  
+
+</div> {% endcomment %}
+
+ {% comment %} <a href="{% url 'views_add_form' %}" class="btn btn-primary">
+    <span class="tf-icons bx bx-list-plus"></span>&nbsp; New Sql
+</a>  {% endcomment %}
+
+<div class="card mt-4">
+    <div class="table-responsive text-nowrap mt-3">
+        <table class="table py-3" id="example" >
+            <thead>
+                <tr>
+                    <th>API Name</th>
+                    <th>API Type</th>
+                    <th>API Method</th>
+                    <th>Token</th>
+                    {% comment %} <th>DB Connection</th> {% endcomment %}
+                    {% comment %} <th>Schema</th> {% endcomment %}
+                    <th>Action</th>
+                
+             
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+                {% for obj in group_list_data %}
+                    <tr>
+                        <td>{{obj.api_name}}</td>
+                        <td>{{obj.api_type}}</td>
+                        <td><span class="badge rounded-pill bg-label-success">{{obj.api_method}}</span></td>
+                        <td>{{obj.uid}}</td>
+                        {% comment %} <td>{{obj.db_connection_name}}</td> {% endcomment %}
+                        {% comment %} <td>{{obj.api_schema}}</td> {% endcomment %}
+                       
+                        <td>
+                            <button class="btn btn-icon btn-sm btn-dark" data-bs-toggle="modal"
+                                    data-bs-target="#basicModal{{ obj.id }}">
+                                <i class='bx bx-cog'></i>
+                            </button>
+                        </td>
+
+
+                        <div class="modal fade" id="basicModal{{ obj.id }}" tabindex="-1" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel1">{{ obj.api_name}}</h5>
+                                <button
+                                  type="button"
+                                  class="btn-close"
+                                  data-bs-dismiss="modal"
+                                  aria-label="Close"
+                                ></button>
+                              </div>
+
+                              <div class="modal-body">
+                                <div class="row g-2">
+                                </div>
+                                <div class="row g-2">
+                                  <div class="col mb-0">
+
+                                    <div class="col mb-0">
+                                      <a class="dropdown-item" href="{% url 'edit_group_form' obj.id %}"><i
+                                              class="bx bxs-edit"></i>&nbsp; Edit</a>
+                                    
+                                      </div>
+                            
+
+                                      <div class="col mb-0">
+                                        <a class="dropdown-item" href="{{obj.document_url}}" target="_blank"><i
+                                                class="bx bxs-file"></i>&nbsp; Documnet</a>
+                                      
+                                        </div>
+
+
+
+                                  </div>
+                                    <div class="col mb-0">
+
+                                        <div class="btn-group">
+                                          <a class="dropdown-item dropdown-toggle" data-bs-toggle="dropdown"
+                                            href=""><i class="bx bxs-map-alt me-1"></i> API End Point</a>
+
+                                          <ul class="dropdown-menu" style="">
+                                              <li><a class="dropdown-item" href="{% url 'field_type_set' obj.id  %}">Body Params</a></li>
+                                              <li><a class="dropdown-item" href="{% url 'api_body_response' obj.id %}">API Docs</a></li>
+
+                                          </ul>
+                                      </div>
+                                        
+                                    </div>
+                                </div>
+                              </div>
+
+                            </div>
+                          </div>
+                        </div>
+
+
+                    </tr>
+                     
+                      
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+
+{% endblock content %}

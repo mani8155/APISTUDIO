@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h4 class="fw-bold py-3 mb-4">Modal {{ data }} List</h4>
+    <form method="post">
+        <button type="submit" class="btn btn-primary">{{ data }}</button>
+        <div class="card mt-4">
+            <div class="table-responsive text-nowrap mt-2">
+                {% csrf_token %}
+                <table class="table py-3" id="example">
+                    <thead>
+                    <tr>
+                        <th>
+                            <input type="checkbox" class="form-check-input" id="action-toggle"
+                                   aria-label="Select all objects on this page for an action">
+                        </th>
+                        <th>Table Name</th>
+                        <th>Description</th>
+                        <th>UID</th>
+                        <th>DB Connection</th>
+                        <th>Published</th>
+                    </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                    {% for table in tables %}
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="_selected_action" value="{{ table.id }}"
+                                       class="form-check-input"
+                                       aria-label="Select this object for an action - {{ table.table_name }}">
+                            </td>
+                            <td>{{ table.table_name }}</td>
+                            <td>{{ table.table_name_public }}</td>
+                            <td>{{ table.uid }}</td>
+                            <td>{{ table.db_connection_name }}</td>
+                            <td>{{ table.published }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </form>
+{% endblock content %}
+
+{% block custom_scripts %}
+    <script>
+        $(document).ready(function () {
+            $('#action-toggle').change(function () {
+                if (this.checked) {
+                    $('input[name="_selected_action"]').prop('checked', true);
+                } else {
+                    $('input[name="_selected_action"]').prop('checked', false);
+                }
+            });
+        });
+    </script>
+{% endblock custom_scripts %}

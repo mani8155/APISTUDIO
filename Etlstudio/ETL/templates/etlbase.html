@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Api Studio</title>
+    <link
+            rel="icon"
+            type="image/x-icon"
+            href="{% static 'assets/img/favicon/nanox.png' %}"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link
+            href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+            rel="stylesheet"
+    />
+    <link
+            rel="stylesheet"
+            href="{% static 'assets/vendor/fonts/boxicons.css' %}"
+    />
+    <link
+            rel="stylesheet"
+            href="{% static 'assets/vendor/css/core.css' %}"
+            class="template-customizer-core-css"
+    />
+    <link
+            rel="stylesheet"
+            href="{% static 'assets/vendor/css/theme-default.css' %}"
+            class="template-customizer-theme-css"
+    />
+    <link rel="stylesheet" href="{% static 'assets/css/demo.css' %}"/>
+    <link
+            rel="stylesheet"
+            href="{% static 'assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css' %}"
+    />
+    <link
+            rel="stylesheet"
+            href="{% static 'assets/vendor/libs/apex-charts/apex-charts.css' %}"
+    />
+
+    <link href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+
+    <style>
+          #example_filter {
+              padding-right: 20px;
+          }
+
+          #example_length {
+              padding-left: 20px;
+          }
+
+          #example_info {
+              padding-left: 20px;
+          }
+
+          .pagination {
+              padding-right: 20px;
+          }
+
+
+
+
+
+    </style>
+
+
+    <script src="{% static 'assets/vendor/js/helpers.js' %}"></script>
+    <script src="{% static 'assets/js/config.js' %}"></script>
+    {% block custom_style %}
+    {% endblock custom_style %}
+</head>
+<body>
+<div class="layout-wrapper layout-content-navbar">
+    <div class="layout-container">
+
+        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+            <div class="app-brand demo">
+                <a href="https://studio.nanox.app" class="app-brand-link">
+                    <span class="app-brand-text demo menu-text fw-bolder ms-2">Api Studio</span>
+                </a>
+
+                <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+                    <i class="bx bx-chevron-left bx-sm align-middle"></i>
+                </a>
+            </div>
+            <!--            Left column menu-->
+            <div>
+                <ul class="menu-inner py-1">
+                    <li class="menu-item" id="menu-etlstudio">
+                        <a href="{% url 'getall_api' %}" class="menu-link">
+                            <i class='menu-icon tf-icons bx bx bx-basket'></i>
+
+                            <div data-i18n="ETLstudio">Manage Jobs</div>
+                        </a>
+                    </li>
+
+                    <li class="menu-item" id="connections">
+                        <a href="{% url 'getall_connection' %}" class="menu-link">
+                            <i class='menu-icon tf-icons bx bx-data'></i>
+                            <div data-i18n="Connections">Connections</div>
+                        </a>
+                    </li>
+                    <li class="menu-item" id="Jobs">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class='menu-icon tf-icons bx bx-customize'></i>
+                            <div data-i18n="Connections">Jobs</div>
+                        </a>
+                        <ul class="menu-sub">
+                            <div>
+
+                                <a href="{% url 'start_scheduler' %}" class="menu-link">
+                                    <i class='bx bx-play'></i>
+                                    Start Transfer
+                                </a>
+
+                                <a href="{% url 'stop_scheduler' %}" class="menu-link">
+                                    <i class='bx bx-stop'></i>
+                                    <div data-i18n="Stop Transfer Form">Stop Transfer</div>
+                                </a>
+
+                                <a href="{% url 'selectconfig' %}" class="menu-link">
+                                    <i class='menu-icon tf-icons bx bx-wrench'></i>
+                                    <div data-i18n="Configure Form">Configure</div>
+                                </a>
+                            </div>
+
+                        </ul>
+
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <div class="layout-page">
+<!--            Navigation bar -->
+            <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+                 id="layout-navbar">
+                <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+                    <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                        <i class="bx bx-menu bx-sm"></i>
+                    </a>
+                </div>
+
+                <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+                    <button class="btn btn-icon btn-outline-dark" onClick="javascript:history.go(-1);"><i
+                            class='bx bx-arrow-back'></i></button>
+                    <ul class="navbar-nav flex-row align-items-center ms-auto">
+
+                        <!-- User -->
+                        <li class="nav-item navbar-dropdown dropdown-user dropdown">
+<!--                            <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"-->
+<!--                               data-bs-toggle="dropdown">-->
+<!--                                <div class="avatar avatar-online">-->
+<!--                                    <img src={{request.user.profilepic.url}} alt class="w-px-40-->
+<!--                                    h-auto rounded-circle"/>-->
+<!--                                </div>-->
+<!--                            </a>-->
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <div class="d-flex">
+                                            <div class="flex-shrink-0 me-3">
+                                                <div class="avatar avatar-online">
+
+                                                    <img src={{request.user.profilepic.url}}
+                                                         alt
+                                                         class="w-px-40 h-auto rounded-circle"/>
+
+                                                </div>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <span class="fw-semibold d-block">{% firstof  user.get_short_name user.get_username "Anonymous" %}</span>
+                                                <small class="text-muted">{% firstof user.get_username "guest" %}</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <div class="dropdown-divider"></div>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="bx bx-user me-2"></i>
+                                        <span class="align-middle">My Profile</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <div class="dropdown-divider"></div>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="bx bx-power-off me-2"></i>
+                                        <span class="align-middle">Log Out</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!--/ User -->
+                    </ul>
+                </div>
+            </nav>
+
+<!--            Main Body or card body-->
+            <div class="content-wrapper">
+                <div class="container-xxl flex-grow-1 container-p-y">
+
+                    {% if messages %}
+
+                    {% for message in messages %}
+
+                    {% if message.tags == "error" %}
+                    <div role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000"
+                         class="bs-toast toast toast-placement-ex m-2 bg-danger top-0 end-0 fade show">
+
+                        <div class="toast-header">
+                            <i class='bx bxs-error-alt'></i>&nbsp;
+                            <div class="me-auto fw-semibold">Alert</div>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="toast-body" style="white-space: pre-line">{{ message }}</div>
+                    </div>
+
+                    {% elif message.tags == "success" %}
+                    <div role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000"
+                         class="bs-toast toast toast-placement-ex m-2 bg-success top-0 end-0 fade show">
+                        <div class="toast-header">
+                            <i class='bx bx-list-check'></i>&nbsp;
+                            <div class="me-auto fw-semibold">Success</div>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="toast-body" style="white-space: pre-line">{{ message }}</div>
+                    </div>
+
+                    {% elif message.tags == "warning" %}
+                    <div role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000"
+                         class="bs-toast toast toast-placement-ex m-2 bg-warning top-0 end-0 fade show">
+                        <div class="toast-header">
+                            <i class='bx bx-list-check'></i>&nbsp;
+                            <div class="me-auto fw-semibold">Warning</div>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast"
+
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="toast-body" style="white-space: pre-line">{{ message }}</div>
+                    </div>
+
+                    {% endif %}
+
+                    {% endfor %}
+
+                    {% endif %}
+
+                    {% block content %}
+                    {% endblock content %}
+                </div>
+            </div>
+
+            </nav>
+        </div>
+        <script>
+      let currentMenu = document.getElementById("{{menu}}");
+      currentMenu.classList.add("active");
+
+        </script>
+
+        <script src="{% static 'assets/vendor/libs/jquery/jquery.js' %}"></script>
+        <script src="{% static 'assets/vendor/libs/popper/popper.js' %}"></script>
+        <script src="{% static 'assets/vendor/js/bootstrap.js' %}"></script>
+        <script src="{% static 'assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js' %}"></script>
+        <script src="{% static 'assets/vendor/js/menu.js' %}"></script>
+        <script src="{% static 'assets/vendor/libs/apex-charts/apexcharts.js' %}"></script>
+        <script src="{% static 'assets/js/main.js' %}"></script>
+        <script src="{% static 'assets/js/dashboards-analytics.js' %}"></script>
+        <script src="{% static 'assets/js/ui-toasts.js' %}"></script>
+        <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+
+        <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+        <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+
+        <script>
+            new DataTable('#example');
+        </script>
+        {% block custom_scripts %}
+        {% endblock custom_scripts %}
+    </div></div>
+</body>
+</html>

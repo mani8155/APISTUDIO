@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block custom_menus %}
+  {% include "user_menus.html" %}
+{% endblock custom_menus %}
+{% block content %}
+
+<h4 class="fw-bold py-3 mb-4">Add New Schema</h4>
+
+<div class="card mb-4">
+  <div class="card-body">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="mb-3">
+            <label class="form-label" for="basic-default-fullname">{{field.label}}</label>
+            {{field}}
+        </div>
+        {% endfor %}
+      <button type="submit" class="btn btn-primary">Create</button>
+    </form>
+  </div>
+</div>
+
+
+
+{% endblock content %}

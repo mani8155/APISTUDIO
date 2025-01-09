@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block custom_menus %}
+  {% include "user_menus.html" %}
+{% endblock custom_menus %}
+{% load base_temp_tags %}
+{% block content %}
+<h4 class="fw-bold py-3">
+    {{ table.table_name }}<span class="text-muted fw-light"> / {{ table.table_name_public }}</span>
+</h4>
+<h5>Versions</h5>
+<div id="accordionExample" class="accordion">
+    {% for version in versions %}
+        <div class="card accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+            <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#accordion-{{version.id}}" aria-expanded="false" aria-controls="accordion-{{version.id}}">
+                {{version.created_date|dateformat}}
+            </button>
+            </h2>
+            <div id="accordion-{{version.id}}" class="accordion-collapse collapse" data-bs-parent="#accordionExample" style="">
+            <div class="accordion-body">
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#revertVersion-{{version.id}}">
+                    <span class="tf-icons bx bxs-arrow-from-right"></span> Revert
+                </button>
+                <div class="modal fade" id="revertVersion-{{version.id}}" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel1">Revert</h5>
+                                <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                                ></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Are you sure you want to revert this version <b>{{version.created_date|dateformat}}</b>?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                    Close
+                                </button>
+                                <a href="{% url "revert_table" version.id %}" class="btn btn-primary">Revert</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive text-nowrap">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Field Name</th>
+                                <th>Description</th>
+                                <th>Field Data Type</th>
+                                <th>Related To Table</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0">
+                            {% for field in version.fields_list %}
+                                <tr>
+                                    <td>{{field.field_name}}</td>
+                                    <td>{{field.field_name_public}}</td>
+                                    <td>{{field.field_data_type | title}}</td>
+                                    <td>{{field.related_to}}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock content %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block custom_menus %}
+    {% include "admin_menus.html" %}
+{% endblock custom_menus %}
+
+{% block content %}
+<h4 class="fw-bold py-3">Select Application</h4>
+
+{% if not app_core_api %}
+    <div class="alert alert-danger" role="alert">
+        No Menu Application. Contact Administrator
+    </div>
+{% endif %}
+
+<div class="card mt-4">
+    <div class="table-responsive text-nowrap mt-2">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>App ID</th>
+                    <th>Type</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+                {% for app in app_core_api %}
+                    <tr>
+                        <td>{{app.name}}</td>
+                        <td>{{app.app_id}}</td>
+                        <td>{{app.type|capfirst }}</td>
+                        <td>
+                            <a class="btn btn-sm btn-primary" href="{% url "add_menu" app.app_id %}">Select</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}

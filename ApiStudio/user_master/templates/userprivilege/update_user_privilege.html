@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block custom_menus %}
+    {% include "admin_menus.html" %}
+{% endblock custom_menus %}
+{% block content %}
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.0.1/dist/css/multi-select-tag.css">
+
+
+<h4 class="fw-bold py-3 mb-4">Create User Privilege</h4>
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+
+{#                <div class="mb-3 col-md-6" id="dbCol">#}
+{#                    <label for="dbConnection" class="form-label">Menu Privilege</label>#}
+{#                    <select class="form-control" id="menupri" name="menupri">#}
+{##}
+{#                        <option selected=""#}
+{#                                value="{{ menu_res_json.menu_privilege }}">{{ menu_res_json.menu_privilege }}</option>#}
+{#                        {% for obj in menu_privilege_list %}#}
+{#                            {% if menu_res_json.menu_privilege == obj.menu_privilege_name %}#}
+{#                            {% else %}#}
+{#                                <option value="{{ obj.menu_privilege_name }}">{{ obj.menu_privilege_name }}</option>#}
+{#                            {% endif %}#}
+{##}
+{##}
+{#                        {% endfor %}#}
+{#                    </select>#}
+{#                </div>#}
+
+
+<div class="mb-3 col-md-6" id="dbCol">
+    <label for="dbConnection" class="form-label">Menu Privilege</label>
+    <select class="form-control" id="menupri" name="menupri" readonly="">
+        <!-- Iterate to find the selected option -->
+
+            {% for menu_pre in menu_pre_data %}
+                {% if menu_res_json.menu_privilege|add:0 == menu_pre.psk_id %}
+                    <option value="{{ menu_pre.psk_id }}" selected="" >{{ menu_pre.menu_privilege_name }}</option>
+                {% endif %}
+            {% endfor %}
+
+
+{#        <!-- Iterate to list all options without duplicating the selected one -->#}
+{#        {% for menu_pre in menu_pre_data %}#}
+{#            {% if menu_res_json.menu_privilege|add:0 != menu_pre.psk_id %}#}
+{#                <option value="{{ menu_pre.psk_id }}">{{ menu_pre.menu_privilege_name }}</option>#}
+{#            {% endif %}#}
+{#        {% endfor %}#}
+    </select>
+</div>
+
+
+
+                <div class="mb-3" id="dbCol">
+                    <label for="dbConnection" class="form-label">Menu Name</label>
+                    <div class="">
+                        <div class="list-group">
+                            {% for obj in menus_name_list %}
+                            <label class="list-group-item">
+                                <input class="form-check-input me-1" name="view_menus" type="checkbox" value="{{ obj.psk_id }}"
+                                {% if obj.psk_id in previous_menus_list %}checked{% endif %}>
+                                {{ obj.menu_name }}
+                            </label>
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+            <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+
+
+        </form>
+    </div>
+</div>
+</div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.0.1/dist/js/multi-select-tag.js"></script>
+    <script>
+    new MultiSelectTag('userrole')  // id
+</script>
+
+
+{% endblock content %}
+

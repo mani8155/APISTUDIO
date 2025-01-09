@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% block custom_menus %}
+    {% include "user_menus.html" %}
+{% endblock custom_menus %}
+
+{% block content %}
+
+<h4 class="fw-bold  mb-4">Update Job</h4>
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+
+
+            <div class="mb-3 col-md-4">
+                <label class="form-label">apiname</label>
+                <input type="text" class="form-control"  name="apiname" value="{{ obj.api_name }}" required>
+            </div>
+
+                   <div class="mb-3 col-md-4">
+                <label class="form-label">uid</label>
+                <input type="text" class="form-control" name="uid" value="{{ obj.uid }}" readonly>
+            </div>
+
+                        <div class="mb-3 col-md-4">
+                <label class="form-label">api type</label>
+                <input type="text" class="form-control" name="api_type" value="REST" readonly>
+            </div>
+
+                <div class="mb-3 col-md-4">
+                    <label class="form-label">api method</label>
+                    <select class="form-control" name="api_method">
+                        <option selected="" value="post">POST</option>
+                    </select>
+                </div>
+
+
+
+                <div class="mb-3 col-md-4">
+                    <label class="form-label" for="task_start_date">Task Start Date</label>
+                    <input type="date" class="form-control" id="task_start_date" name="task_start_date" value="{{ obj.task_start }}" required>
+                </div>
+
+                <div class="mb-3 col-md-4">
+                    <label class="form-label">Start Time</label>
+                    <input type="time" class="form-control" name="start_time" value="{{ obj.task_start_time }}"
+                           required>
+                </div>
+
+
+                <div class="mb-3 col-md-4">
+                    <label class="form-label" for="task_end_date">Task End Date</label>
+                    <input type="date" class="form-control" id="task_end_date" name="task_end_date" value="{{ obj.task_end }}" required>
+                </div>
+
+                                <div class="mb-3 col-md-4">
+                <label class="form-label">Timer Interval</label>
+                <input type="number" class="form-control"  name="timer_interval" value="{{ obj.timer_interval }}" required>
+            </div>
+
+                <div class="mb-3 col-md-4">
+                    <label class="form-label">Timer Options</label>
+                    <select name="timer_options" class="form-control" required>
+                        <option value="" disabled {% if not obj.timer_options %}selected{% endif %}>
+                            ----------Select---------
+                        </option>
+                        <option value="seconds" {% if obj.timer_options == "seconds" %}selected{% endif %}>Seconds
+                        </option>
+                        <option value="minutes" {% if obj.timer_options == "minutes" %}selected{% endif %}>Minutes
+                        </option>
+                        <option value="hours" {% if obj.timer_options == "hours" %}selected{% endif %}>Hours</option>
+                        {# Uncomment the following option if "days" is required #}
+                        {# <option value="days" {% if obj.timer_options == "days" %}selected{% endif %}>Days</option> #}
+                    </select>
+                </div>
+
+
+               <div class="mb-3 col-md-4">
+                <label class="form-label">coreapi</label>
+                <input type="text" class="form-control"  name="coreapi" value="{{ obj.core_api }}" required>
+            </div>
+
+
+                         <div class="mb-3 col-md-4">
+                <label class="form-label">Secret Key</label>
+                <input type="text" class="form-control" name="secret_key" value="{{ obj.core_api_secrete_key }}" required>
+            </div>
+
+
+
+                                <div class="mb-3 col-md-4">
+                <label class="form-label">Doc url</label>
+                <input type="text" class="form-control" name="doc_url" value="{{ obj.document_url }}">
+            </div>
+
+
+
+                <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+
+
+
+
+
+{% endblock content %}
+

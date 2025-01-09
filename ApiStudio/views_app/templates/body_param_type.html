@@ -1,0 +1,110 @@
+
+{% extends "base.html" %}
+{% block custom_menus %}
+  {% include "user_menus.html" %}
+{% endblock custom_menus %}
+{% load base_temp_tags %}
+{% load sql_views_tags %}
+{% block content %}
+
+
+
+    <h4 class="fw-bold">{{ api_name }} / add params value</h4>
+{##}
+{#    <div class="card mb-4 mt-2">#}
+{#        <div class="card-body">#}
+{#            <div class="row">#}
+{#                <div class="col"><h5>Parameter</h5></div>#}
+{#                <div class="col"><h5>Data Type</h5></div>#}
+{#                <div class="col"><h5>Value</h5></div>#}
+{##}
+{#            </div>#}
+{##}
+{##}
+{#            <form Method="post" action={% url 'api_parametar_type' %}>#}
+{#                {% csrf_token %}#}
+{#                {% for key, value in api_params.items %}#}
+{#                    <div class="row g-2">#}
+{#                        <div class="col mb-0 mt-3">#}
+{#                            <input type="text" name="field_id_{{ forloop.counter }}" class="form-control"#}
+{#                                   value="{{ key }}" readonly>#}
+{#                        </div>#}
+{##}
+{#                        <div class="col mb-0 mt-3">#}
+{#                            <select class="form-select" id="param_data_type}"#}
+{#                                    name="param_data_type_{{ forloop.counter }}" required>#}
+{#                                <option selected="" value="">------Select------</option>#}
+{#                                <option value="str">String</option>#}
+{#                                <option value="int">Integer</option>#}
+{#                                <option value="float">Float</option>#}
+{#                                <option value="datetime">Date/Time</option>#}
+{#                            </select>#}
+{#                        </div>#}
+{##}
+{##}
+{#                        <div class="col mb-0 mt-3">#}
+{#                            <input type="text" name="param_type_{{ forloop.counter }}" value="{{ value }}"#}
+{#                                   class="form-control" required>#}
+{#                        </div>#}
+{##}
+{#                    </div>#}
+{#                {% endfor %}#}
+{##}
+{##}
+{#                <input type="hidden" name="params_count" value="{{ api_params_count }}">#}
+{#                <input type="hidden" name="id" value="{{ id }}">#}
+{##}
+{#                <button class="form-control mt-3 btn-primary" style="width: 8%;" type="submit">Save</button>#}
+{#            </form>#}
+{#        </div>#}
+{##}
+{#    </div>#}
+{#{% endblock content %}#}
+
+
+
+<div class="card mb-4 mt-2">
+    <div class="card-body">
+
+     <div class="row">
+                <div class="col"><h5>Parameter</h5></div>
+                <div class="col"><h5>Data Type</h5></div>
+                <div class="col"><h5>Value</h5></div>
+
+            </div>
+
+
+        <form method="post" action="{% url 'api_parametar_type' %}">
+            {% csrf_token %}
+            {% for key, value in api_params.items %}
+            <div class="row g-2 mb-3">
+                <div class="col">
+{#                    <label for="field_id_{{ forloop.counter }}" class="form-label">Parameter</label>#}
+                    <input type="text" name="field_id_{{ forloop.counter }}" class="form-control" value="{{ key }}" readonly>
+                </div>
+          <div class="col">
+{#                    <label for="param_data_type_{{ forloop.counter }}" class="form-label">Data Type</label>#}
+                    <select class="form-select" id="param_data_type_{{ forloop.counter }}" name="param_data_type_{{ forloop.counter }}" required>
+                        <option value="">------Select------</option>
+                        <option value="str" {% if api_params_data_type|get_item:key == 'str' %}selected{% endif %}>String</option>
+                        <option value="int" {% if api_params_data_type|get_item:key == 'int' %}selected{% endif %}>Integer</option>
+                        <option value="float" {% if api_params_data_type|get_item:key == 'float' %}selected{% endif %}>Float</option>
+                        <option value="date" {% if api_params_data_type|get_item:key == 'date' %}selected{% endif %}>Date</option>
+                        <option value="datetime" {% if api_params_data_type|get_item:key == 'datetime' %}selected{% endif %}>Date/Time</option>
+                    </select>
+                </div>
+                <div class="col">
+{#                    <label for="param_type_{{ forloop.counter }}" class="form-label">Value</label>#}
+                    <input type="text" name="param_type_{{ forloop.counter }}" value="{{ value }}" class="form-control" required>
+                </div>
+            </div>
+            {% endfor %}
+
+            <input type="hidden" name="params_count" value="{{ api_params_count }}">
+            <input type="hidden" name="id" value="{{ id }}">
+
+            <button class="form-control mt-3 btn-primary" style="width: 8%;" type="submit">Save</button>
+        </form>
+    </div>
+</div>
+{% endblock content %}

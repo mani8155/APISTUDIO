@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block custom_menus %}
+{% include "user_menus.html" %}
+{% endblock custom_menus %}
+{% load base_temp_tags %}
+{% block content %}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@2.0.1/dist/css/multi-select-tag.css">
+<script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@2.0.1/dist/js/multi-select-tag.js"></script>
+
+
+
+<h4 class="fw-bold py-3 mb-4">Edit Gruop Form</h4>
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+            <div class="mb-3 col-md-4" id="dbCol">
+                <label for="dbConnection" class="form-label">UID</label>
+                  <input type="text"  class="form-control" value="{{obj.uid}}" name="uid" readonly>
+            </div>
+
+            <div class="mb-3 col-md-4" id="dbCol">
+                <label for="dbConnection" class="form-label">API Name</label>
+                  <input type="text"  class="form-control" value="{{obj.api_name}}" name="apiname">
+            </div>
+
+            <div class="mb-3 col-md-4" id="dbCol">
+                <label for="dbConnection" class="form-label">API Type</label>
+                  <select class="form-control" id="id_api_type" name="api_type" readonly>
+                    <option value="{{obj.api_type}}">{{obj.api_type}}</option>
+                </select>
+            </div> 
+
+            <div class="mb-3 col-md-4">
+                <label for="dbConnection" class="form-label">API Method</label>
+                  <select class="form-control" id="id_api_method" name="api_method">
+                    <option value="{{obj.api_method}}">{{obj.api_method}}</option>
+                </select>
+            </div> 
+
+            {% comment %} <div class="mb-3 col-md-4" id="dbCol">
+                <label for="dbConnection" class="form-label">DB Connection</label>
+                <select class="form-select" id="dbConnection" name="db_connection" onchange="SeletctDB(this)">
+                    <option selected="" value="">---------</option>
+                    {% for db_eng in db_engines %}
+                        <option value="{{ db_eng.id }}"
+                                {% if db_eng.id == selected_db %}selected{% endif %}>{{ db_eng.db_connection }}</option>
+                    {% endfor %}
+                </select>
+            </div> {% endcomment %}
+
+            <div class="mb-3 col-md-4" id="dbCol">
+                <label class="form-label">DB Connection</label>
+                <input type="text" class="form-control" id="dbConnection" value="{{connection_name}}" name="db_connection" readonly>
+            </div>
+
+            {% comment %} <div class="mb-3 col-md-4"  id="dbCol">
+                <label for="dbConnection" class="form-label">Schema</label>
+                  <select class="form-control" id="id_schema" name="schema">
+                    <option selected="" value="{{schema}}">{{schema}}</option>
+                </select>
+            </div> {% endcomment %}
+
+            <div class="mb-3 col-md-4" id="dbCol">
+                <label class="form-label">Schema</label>
+                <input type="text" class="form-control" id="id_schema" value="{{schema}}" name="schema" readonly>
+            </div>
+
+       
+            <div class="mb-3">
+                <label for="dbConnection" class="form-label">URL</label>
+                  <input type="text" class="form-control" value="{{obj.document_url}}" name="doc_url">
+            </div>
+           
+
+
+
+            <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+
+
+
+
+
+<script>
+
+    function SeletctDB(element){
+    let db = element.value
+    console.log(db);
+    
+    $.ajax({
+        type: 'GET',
+        url: {% url 'get_db' %},
+        data: {'db':db},
+        success: function (data){
+    
+            let SchemaValue = data['schema_list'];
+    
+            schemaeData = SchemaValue;
+            let schema = document.getElementById('id_schema');
+            schema.innerHTML = "";
+            schema.innerHTML = `<option value="" selected="">---------</option>`;
+    
+            for (let i = 0; i < schemaeData.length; i++) {
+                schema.innerHTML += `<option value="${schemaeData[i]}">${schemaeData[i]}</option>`;
+            }
+    
+        }
+    
+    })
+    
+    }
+    
+    
+    </script>
+    
+
+
+{% endblock content %}
+
+

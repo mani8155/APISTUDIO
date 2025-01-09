@@ -1,0 +1,27 @@
+ {% else %}
+            <tr class="table">
+                <td>
+                    {{data.core_api}}
+                </td>
+                <td>
+                    {{data.priority}}
+                </td>
+                <td>
+                    {{data.start_task}}
+                </td>
+                <td>
+                    {{data.end_task}}
+                </td>
+                <td>
+                    <button class="btn btn-icon btn-sm btn-dark" data-bs-toggle="modal"
+                            data-bs-target="#modalservice{{data.id}}">
+                        <i class="bx bx-cog"></i>
+                    </button>
+                </td>
+
+<!--                <td>-->
+<!--                    {% if data.run_separate %}-->
+<!--                    <i class='bx bx-check' style='color:#0a46ef; font-size:30px;'></i>-->
+<!--                    {% endif %}-->
+<!--                </td>-->
+            </tr>

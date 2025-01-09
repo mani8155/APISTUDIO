@@ -1,0 +1,5 @@
+crispy-bootstrap5
+Django
+pydantic
+requests
+sqlalchemy

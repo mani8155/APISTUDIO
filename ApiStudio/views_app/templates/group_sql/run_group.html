@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block custom_menus %}
+  {% include "user_menus.html" %}
+{% endblock custom_menus %}
+{% load base_temp_tags %}
+{% block content %}
+{% load sql_views_tags %}
+
+
+
+
+<h4 class="fw-bold mb-3 mt-2">SQl Views / {{api_name}} </h4>
+
+
+
+<div class="accordion mt-3" id="accordionExample">
+{% for key, value in response_data.items %}
+
+    <div class="card accordion-item active">
+      <h2 class="accordion-header" id="heading{{key}}">
+        <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#accordion{{key}}" aria-controls="accordion{{key}}">
+          {{key}}
+        </button>
+      </h2>
+
+      <div id="accordion{{key}}" class="accordion-collapse collapse" data-bs-parent="#accordionExample" style="">
+        <div class="accordion-body">
+            <div class="table-responsive text-nowrap">
+                <table class="table">
+                    <thead>
+                        <tr>
+                        {% for col in value|getfirstcolhead %}
+                        <th>{{col}}</th>
+                        {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for rows in value %}
+                        <tr>
+                            {% for _, r_val in rows.items %}
+                            <td>{{r_val}}</td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+      </div>
+    </div>
+    
+    {% endfor %}
+</div>
+
+
+
+  
+
+
+
+
+{% endblock content %}

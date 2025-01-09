@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block custom_menus %}
+    {% include "admin_menus.html" %}
+{% endblock custom_menus %}
+
+{% block content %}
+    <h4 class="fw-bold py-3 mb-4">{{ action }}<span class="text-muted fw-light"> / {{ app_group.group_id }}</span></h4>
+    <div class="card mb-4">
+        <div class="card-body">
+            <form method="POST">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="mb-3">
+                        {% if field.label != "Used" and field.label != "Child" %}
+                            <label class="form-label" for="basic-default-fullname">{{ field.label }}</label>
+                        {% endif %}
+                        {{ field }}
+                    </div>
+                {% endfor %}
+               
+                <button type="submit" class="btn btn-primary">Send</button>
+            </form>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block custom_scripts %}
+    <script>
+        {% if edit == "edit-group" %}
+            document.getElementById("id_group_id").setAttribute("readonly", "true");
+        {% elif edit == "edit-app" %}
+            document.getElementById("id_app_id").setAttribute("readonly", "true");
+            {% if app.used %}
+                document.getElementById("id_type").setAttribute("disabled", "true");
+            {% endif %}
+        {% endif %}
+    </script>
+{% endblock custom_scripts %}

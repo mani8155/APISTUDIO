@@ -1,0 +1,35 @@
+     <td>
+                    <div class="dropdown">
+                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
+                                data-bs-toggle="dropdown">
+                            <i class="bx bx-dots-vertical-rounded"></i>
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{% url 'update_api' data.id %}"
+                            ><i class="bx bx-edit-alt me-1"></i> Edit</a
+                            >
+                            <a class="dropdown-item" href="{% url 'runSingleService' data.id %}"
+                            ><i class="bx bx-fast-forward" style="color:#dc1111"></i> Force Run</a
+                            >
+                            <a class="dropdown-item" href="{% url 'delete_api' data.id %}"
+                            ><i class="bx bx-trash me-1"></i> Delete </a
+                            >
+                            <a class="dropdown-item" href="{% url 'testservice' data.id %}"
+                            ><i class="bx bx-bug-alt"></i> Test </a
+                            >
+                            {% if data.run_separate %}
+                            <a class="dropdown-item" href="{% url 'stop_run_separate' data.id %}"
+                            ><i class="bx bx-stop" style="color:#e81b1b"></i> Stop </a
+                            >
+
+                            {% else %}
+                            <a class="dropdown-item" href="{% url 'start_run_separate' data.id %}"
+                            ><i class="bx bx-play" style="color:#0ce020"></i> Start </a
+                            >
+                            {% endif %}
+
+
+
+                        </div>
+                    </div>
+                </td>

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block custom_menus %}
+  {% include "user_menus.html" %}
+{% endblock custom_menus %}
+
+{% block content %}
+{% load schema_temp_tags %}
+
+
+<h4 class="fw-bold py-3 mb-4">{{ db_name }} / {{table_name}} / data</h4>
+
+<div class="card mt-4">
+    <div class="table-responsive text-nowrap mt-2">
+        <table class="table py-3" id="example">
+            <thead>
+                <tr>
+                    {% for j in column_name %}
+                    <th>{{j}}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+                {% for i in column_data %}
+                    <tr>
+                        {% for j in column_name %}
+                              <td>{{ i|getattribute:j }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+{% endblock content %}

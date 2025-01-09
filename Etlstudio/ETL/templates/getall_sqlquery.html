@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>getall_sqlquery</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>sqlquery</th>
+        <th>purpose</th>
+        <th>remark</th>
+    </tr>
+    </thead>
+    {% for obj in queryset %}
+    <tr>
+        <td>{{obj.sqlquery}}</td>
+        <td>{{obj.purpose}}</td>
+        <td>{{obj.remark}}</td>
+        <td><button><a href="{% url 'download_sql' obj.id %}">Download</a></button></td>
+    </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>
