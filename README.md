@@ -31,4 +31,4 @@ API Studio Configuration Screen
 
 ![API Studio](Snap/Configuratin.png)
 
-![API Studio](Snap/Cs.png)
+![API Studio](Snap/configurations_page.png)
